@@ -118,6 +118,7 @@ export function ChatBot() {
   const [error, setError] = useState<string | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  const genRef = useRef(0);
 
   const apiKey = process.env.NEXT_PUBLIC_OPENROUTER_API_KEY ?? "";
   const model = process.env.NEXT_PUBLIC_OPENROUTER_MODEL ?? DEFAULT_MODEL;
@@ -151,8 +152,10 @@ export function ChatBot() {
   }, [open]);
 
   const reset = () => {
+    genRef.current += 1;
     setMessages([]);
     setError(null);
+    setLoading(false);
   };
 
   const send = async (text: string) => {
@@ -163,6 +166,7 @@ export function ChatBot() {
     setMessages(next);
     setInput("");
     setLoading(true);
+    const gen = ++genRef.current;
     const tryModels = [model, ...FALLBACK_MODELS.filter((m) => m !== model)];
     let reply = "";
     let lastErrMsg = "";
@@ -210,6 +214,7 @@ export function ChatBot() {
         console.warn("[chat]", lastErrMsg);
       }
     }
+    if (gen !== genRef.current) return;
     if (reply) {
       setMessages([...next, { role: "assistant", content: reply }]);
     } else {
