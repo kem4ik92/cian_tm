@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { Filters } from "@/components/Filters";
 import { ListingCard } from "@/components/ListingCard";
 import { cityName } from "@/lib/cities";
@@ -13,6 +13,7 @@ import { useApp } from "@/components/I18nProvider";
 export function SearchClient() {
   const sp = useSearchParams();
   const { t } = useApp();
+  const [filtersOpen, setFiltersOpen] = useState(false);
 
   const { params, results, title } = useMemo(() => {
     const record: Record<string, string> = {};
@@ -59,10 +60,24 @@ export function SearchClient() {
       </div>
 
       <div className="grid gap-6 lg:grid-cols-[280px_1fr]">
-        <Filters />
+        <div className={filtersOpen ? "" : "hidden lg:block"}>
+          <Filters />
+        </div>
 
         <div>
-          <div className="mb-4 flex items-center justify-between">
+          <div className="mb-4 flex items-center justify-between gap-2">
+            <button
+              type="button"
+              onClick={() => setFiltersOpen((v) => !v)}
+              className="btn-outline text-sm lg:hidden inline-flex items-center gap-1.5"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="3" y1="6" x2="21" y2="6" />
+                <line x1="7" y1="12" x2="17" y2="12" />
+                <line x1="10" y1="18" x2="14" y2="18" />
+              </svg>
+              {filtersOpen ? t("filters.close") : t("filters.open")}
+            </button>
             <SortSelect current={params.sort ?? "newest"} />
           </div>
 

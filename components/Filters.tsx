@@ -42,7 +42,7 @@ export function Filters() {
   const reset = () => router.push("/search");
 
   return (
-    <aside className="bg-white rounded-xl border border-slate-200 p-4 space-y-5 sticky top-20">
+    <aside className="bg-white rounded-xl border border-slate-200 p-4 space-y-5 lg:sticky lg:top-20 lg:max-h-[calc(100vh-6rem)] lg:overflow-y-auto">
       <div>
         <h3 className="text-sm font-semibold mb-2">{t("filters.deal")}</h3>
         <div className="grid grid-cols-3 gap-1">

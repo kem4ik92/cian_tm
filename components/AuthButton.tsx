@@ -88,7 +88,7 @@ export function AuthButton() {
           onClick={close}
         >
           <div
-            className="bg-white rounded-2xl shadow-xl w-full max-w-lg overflow-hidden"
+            className="bg-white rounded-2xl shadow-xl w-full max-w-lg max-h-[92vh] overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200">
