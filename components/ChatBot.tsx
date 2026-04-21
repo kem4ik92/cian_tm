@@ -107,7 +107,7 @@ export function ChatBot() {
     setLoading(true);
     const tryModels = [model, ...FALLBACK_MODELS.filter((m) => m !== model)];
     let reply = "";
-    let lastErr: unknown = null;
+    let lastErrMsg = "";
     for (const m of tryModels) {
       try {
         const res = await fetch(API_URL, {
@@ -130,12 +130,15 @@ export function ChatBot() {
           }),
         });
         const data = await res.json().catch(() => null);
+        const apiCode = data?.error?.code;
+        const apiMsg: string | undefined = data?.error?.message;
         if (!res.ok || data?.error) {
-          const code = data?.error?.code ?? res.status;
-          lastErr = new Error(`${m}: HTTP ${code}`);
-          // на 429/upstream-ошибки пробуем следующую модель
-          if (res.status === 429 || data?.error?.code === 429 || !res.ok) continue;
-          break;
+          lastErrMsg = `${m.split("/").pop()}: ${apiCode ?? res.status}${apiMsg ? ` — ${apiMsg}` : ""}`;
+          console.warn("[chat]", lastErrMsg);
+          // 401/403 = неверный ключ, нет смысла пробовать другие модели
+          if (res.status === 401 || res.status === 403) break;
+          // 429/402/5xx/404 модели — пробуем следующую
+          continue;
         }
         const content: string =
           data?.choices?.[0]?.message?.content?.toString().trim() ?? "";
@@ -143,16 +146,16 @@ export function ChatBot() {
           reply = content;
           break;
         }
-        lastErr = new Error(`${m}: empty reply`);
+        lastErrMsg = `${m.split("/").pop()}: пустой ответ`;
       } catch (e) {
-        lastErr = e;
+        lastErrMsg = `${m.split("/").pop()}: ${(e as Error).message ?? "network"}`;
+        console.warn("[chat]", lastErrMsg);
       }
     }
     if (reply) {
       setMessages([...next, { role: "assistant", content: reply }]);
     } else {
-      console.error("[chat]", lastErr);
-      setError(t("chat.error"));
+      setError(lastErrMsg ? `${t("chat.error")} (${lastErrMsg})` : t("chat.error"));
     }
     setLoading(false);
   };
