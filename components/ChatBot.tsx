@@ -7,13 +7,14 @@ import { CITIES } from "@/lib/cities";
 type Message = { role: "user" | "assistant" | "system"; content: string };
 
 const API_URL = "https://openrouter.ai/api/v1/chat/completions";
-const DEFAULT_MODEL = "google/gemma-4-31b-it:free";
+const DEFAULT_MODEL = "z-ai/glm-4.5-air:free";
 // Запасные модели на случай, если основная временно rate-limited (429).
 // Порядок = приоритет. Тоже бесплатные с openrouter.ai.
 const FALLBACK_MODELS = [
+  "qwen/qwen3-next-80b-a3b-instruct:free",
+  "openai/gpt-oss-20b:free",
   "google/gemma-3-27b-it:free",
-  "meta-llama/llama-3.3-70b-instruct:free",
-  "google/gemma-3-12b-it:free",
+  "google/gemma-4-31b-it:free",
 ];
 
 function buildSystemPrompt(lang: "ru" | "tk" | "en"): string {
