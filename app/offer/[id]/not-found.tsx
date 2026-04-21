@@ -26,8 +26,8 @@ export default function OfferNotFound() {
   return (
     <div className="max-w-2xl mx-auto px-4 py-16 text-center">
       <div className="text-5xl mb-4">🏚️</div>
-      <h1 className="text-2xl font-bold mb-2 text-slate-900">{msg.title}</h1>
-      <p className="text-slate-700 mb-6">{msg.desc}</p>
+      <h1 className="text-2xl font-bold mb-2 text-slate-900 dark:text-slate-100">{msg.title}</h1>
+      <p className="text-slate-700 dark:text-slate-200 mb-6">{msg.desc}</p>
       <Link href="/search" className="btn-primary">
         {msg.back}
       </Link>

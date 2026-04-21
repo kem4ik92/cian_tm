@@ -10,7 +10,7 @@ export function ContactReveal({ phone }: { phone: string }) {
 
   return (
     <div>
-      <div className="text-lg font-semibold tabular-nums text-slate-900">
+      <div className="text-lg font-semibold tabular-nums text-slate-900 dark:text-slate-100">
         {shown ? phone : masked}
       </div>
       {shown ? (

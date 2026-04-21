@@ -36,7 +36,7 @@ export function OfferView({
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-6">
-      <nav className="text-sm text-slate-500 mb-3">
+      <nav className="text-sm text-slate-500 dark:text-slate-400 mb-3">
         <Link href="/" className="hover:text-brand-700">
           {t("offer.home")}
         </Link>
@@ -57,10 +57,10 @@ export function OfferView({
         </Link>
       </nav>
 
-      <h1 className="text-2xl md:text-3xl font-bold mb-1 text-slate-900">
+      <h1 className="text-2xl md:text-3xl font-bold mb-1 text-slate-900 dark:text-slate-100">
         {listing.title}
       </h1>
-      <div className="text-slate-600 mb-6">
+      <div className="text-slate-600 dark:text-slate-300 mb-6">
         {cityName(listing.cityId)}, {listing.district} · {listing.address}
       </div>
 
@@ -68,8 +68,8 @@ export function OfferView({
         <div>
           <Gallery images={listing.images} title={listing.title} />
 
-          <section className="mt-8 bg-white rounded-xl border border-slate-200 p-6">
-            <h2 className="text-lg font-semibold mb-4 text-slate-900">
+          <section className="mt-8 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6">
+            <h2 className="text-lg font-semibold mb-4 text-slate-900 dark:text-slate-100">
               {t("offer.characteristics")}
             </h2>
             <dl className="grid grid-cols-1 sm:grid-cols-2 gap-y-3 gap-x-8 text-sm">
@@ -111,18 +111,18 @@ export function OfferView({
             </dl>
           </section>
 
-          <section className="mt-6 bg-white rounded-xl border border-slate-200 p-6">
-            <h2 className="text-lg font-semibold mb-3 text-slate-900">
+          <section className="mt-6 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6">
+            <h2 className="text-lg font-semibold mb-3 text-slate-900 dark:text-slate-100">
               {t("offer.description")}
             </h2>
-            <p className="whitespace-pre-line text-slate-700 leading-relaxed">
+            <p className="whitespace-pre-line text-slate-700 dark:text-slate-200 leading-relaxed">
               {listing.description}
             </p>
           </section>
 
           {listing.amenities.length > 0 ? (
-            <section className="mt-6 bg-white rounded-xl border border-slate-200 p-6">
-              <h2 className="text-lg font-semibold mb-3 text-slate-900">
+            <section className="mt-6 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6">
+              <h2 className="text-lg font-semibold mb-3 text-slate-900 dark:text-slate-100">
                 {t("offer.amenities")}
               </h2>
               <div className="flex flex-wrap gap-2">
@@ -135,11 +135,11 @@ export function OfferView({
             </section>
           ) : null}
 
-          <section className="mt-6 bg-white rounded-xl border border-slate-200 p-6">
-            <h2 className="text-lg font-semibold mb-3 text-slate-900">
+          <section className="mt-6 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6">
+            <h2 className="text-lg font-semibold mb-3 text-slate-900 dark:text-slate-100">
               {t("offer.location")}
             </h2>
-            <div className="aspect-[16/9] w-full rounded-lg overflow-hidden bg-slate-100 border border-slate-200 relative">
+            <div className="aspect-[16/9] w-full rounded-lg overflow-hidden bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-800 relative">
               <iframe
                 title="map"
                 className="absolute inset-0 w-full h-full"
@@ -148,29 +148,29 @@ export function OfferView({
                 src={`https://www.openstreetmap.org/export/embed.html?bbox=${lng - 0.02}%2C${lat - 0.02}%2C${lng + 0.02}%2C${lat + 0.02}&layer=mapnik&marker=${lat}%2C${lng}`}
               />
             </div>
-            <div className="text-xs text-slate-500 mt-2">
+            <div className="text-xs text-slate-500 dark:text-slate-400 mt-2">
               {t("offer.map_note")}
             </div>
           </section>
         </div>
 
         <aside className="lg:sticky lg:top-20 h-fit space-y-4 order-first lg:order-last">
-          <div className="bg-white rounded-xl border border-slate-200 p-6">
-            <div className="text-3xl font-bold text-slate-900">
+          <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6">
+            <div className="text-3xl font-bold text-slate-900 dark:text-slate-100">
               {priceLabel}
             </div>
             {listing.area ? (
-              <div className="text-sm text-slate-600 mt-1">
+              <div className="text-sm text-slate-600 dark:text-slate-300 mt-1">
                 {pricePerSqm(listing.price, listing.area, lang)}
               </div>
             ) : null}
           </div>
 
-          <div className="bg-white rounded-xl border border-slate-200 p-6">
-            <div className="text-xs uppercase tracking-wide text-slate-500">
+          <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6">
+            <div className="text-xs uppercase tracking-wide text-slate-500 dark:text-slate-400">
               {authorRole}
             </div>
-            <div className="text-lg font-semibold text-slate-900">
+            <div className="text-lg font-semibold text-slate-900 dark:text-slate-100">
               {listing.author.name}
             </div>
             <div className="mt-4">
@@ -182,7 +182,7 @@ export function OfferView({
 
       {similar.length > 0 ? (
         <section className="mt-12">
-          <h2 className="text-xl font-bold mb-4 text-slate-900">
+          <h2 className="text-xl font-bold mb-4 text-slate-900 dark:text-slate-100">
             {t("offer.similar")}
           </h2>
           <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
@@ -198,9 +198,9 @@ export function OfferView({
 
 function Row({ label, value }: { label: string; value: string }) {
   return (
-    <div className="flex items-center justify-between gap-4 border-b border-dashed border-slate-200 pb-2">
-      <dt className="text-slate-500">{label}</dt>
-      <dd className="text-slate-900 font-medium text-right">{value}</dd>
+    <div className="flex items-center justify-between gap-4 border-b border-dashed border-slate-200 dark:border-slate-800 pb-2">
+      <dt className="text-slate-500 dark:text-slate-400">{label}</dt>
+      <dd className="text-slate-900 dark:text-slate-100 font-medium text-right">{value}</dd>
     </div>
   );
 }

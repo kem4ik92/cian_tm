@@ -15,7 +15,7 @@ export function Gallery({
 
   return (
     <div>
-      <div className="relative aspect-[16/10] bg-slate-100 rounded-xl overflow-hidden">
+      <div className="relative aspect-[16/10] bg-slate-100 dark:bg-slate-800 rounded-xl overflow-hidden">
         <Image
           src={images[active]}
           alt={title}

@@ -26,6 +26,10 @@ export const DICT = {
     "nav.close": "Закрыть",
     "filters.open": "Фильтры",
     "filters.close": "Скрыть",
+    "theme.label": "Тема",
+    "theme.light": "Светлая",
+    "theme.dark": "Темная",
+    "theme.system": "Системная",
 
     "hero.title": "Вся недвижимость Туркменистана на одном сайте",
     "hero.subtitle":
@@ -223,6 +227,10 @@ export const DICT = {
     "nav.close": "Ýap",
     "filters.open": "Süzgüçler",
     "filters.close": "Gizle",
+    "theme.label": "Tema",
+    "theme.light": "Aýdyň",
+    "theme.dark": "Garanňky",
+    "theme.system": "Ulgaň",
 
     "hero.title": "Türkmenistanyň ähli gozgalmaýan emlägi bir ýerde",
     "hero.subtitle":
@@ -421,6 +429,10 @@ export const DICT = {
     "nav.close": "Close",
     "filters.open": "Filters",
     "filters.close": "Hide",
+    "theme.label": "Theme",
+    "theme.light": "Light",
+    "theme.dark": "Dark",
+    "theme.system": "System",
 
     "hero.title": "All real estate in Turkmenistan in one place",
     "hero.subtitle":

@@ -84,7 +84,7 @@ export function Footer() {
           </ul>
         </div>
       </div>
-      <div className="border-t border-slate-800 text-xs text-slate-500 py-4 text-center">
+      <div className="border-t border-slate-800 text-xs text-slate-500 dark:text-slate-400 py-4 text-center">
         © {new Date().getFullYear()} Jay.tm — {t("footer.rights")}
       </div>
     </footer>

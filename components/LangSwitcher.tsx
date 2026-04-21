@@ -24,15 +24,15 @@ export function LangSwitcher() {
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        className="inline-flex items-center gap-1 px-2 py-1.5 rounded-lg border border-slate-300 bg-white hover:bg-slate-50 text-sm font-medium"
+        className="inline-flex items-center gap-1 px-2 py-1.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 text-sm font-medium"
         aria-label="Language"
       >
         <span aria-hidden>{current.flag}</span>
         <span>{current.label}</span>
-        <span className="text-slate-400 text-xs">▾</span>
+        <span className="text-slate-400 dark:text-slate-500 text-xs">▾</span>
       </button>
       {open ? (
-        <div className="absolute right-0 mt-1 bg-white border border-slate-200 rounded-lg shadow-lg z-40 py-1 min-w-[8rem]">
+        <div className="absolute right-0 mt-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg shadow-lg z-40 py-1 min-w-[8rem]">
           {LANGS.map((l) => (
             <button
               key={l.code}

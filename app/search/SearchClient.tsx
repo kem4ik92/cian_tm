@@ -41,7 +41,7 @@ export function SearchClient() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-6">
-      <nav className="text-sm text-slate-500 mb-3">
+      <nav className="text-sm text-slate-500 dark:text-slate-400 mb-3">
         <Link href="/" className="hover:text-brand-700">
           {t("offer.home")}
         </Link>
@@ -50,10 +50,10 @@ export function SearchClient() {
       </nav>
 
       <div className="flex items-end justify-between flex-wrap gap-2 mb-4">
-        <h1 className="text-2xl md:text-3xl font-bold text-slate-900">
+        <h1 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-slate-100">
           {title}
         </h1>
-        <div className="text-sm text-slate-700">
+        <div className="text-sm text-slate-700 dark:text-slate-200">
           {t("search.found")}{" "}
           <span className="font-semibold">{results.length}</span>
         </div>
@@ -82,9 +82,9 @@ export function SearchClient() {
           </div>
 
           {results.length === 0 ? (
-            <div className="bg-white border border-dashed border-slate-300 rounded-xl p-10 text-center">
+            <div className="bg-white dark:bg-slate-900 border border-dashed border-slate-300 dark:border-slate-700 rounded-xl p-10 text-center">
               <div className="text-4xl mb-3">🔎</div>
-              <p className="text-slate-700 mb-4">{t("search.no_results")}</p>
+              <p className="text-slate-700 dark:text-slate-200 mb-4">{t("search.no_results")}</p>
               <Link href="/search" className="btn-outline">
                 {t("search.reset")}
               </Link>

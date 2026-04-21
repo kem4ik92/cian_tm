@@ -45,7 +45,7 @@ export function AuthButton() {
   if (user) {
     return (
       <div className="flex items-center gap-2">
-        <span className="hidden sm:inline text-sm text-slate-700 max-w-[8rem] truncate">
+        <span className="hidden sm:inline text-sm text-slate-700 dark:text-slate-200 max-w-[8rem] truncate">
           {user.name}
         </span>
         <button
@@ -67,7 +67,7 @@ export function AuthButton() {
           setOpen(true);
           setMode("login");
         }}
-        className="hidden sm:inline-flex items-center text-sm text-slate-700 hover:text-brand-700 px-2 py-1.5"
+        className="hidden sm:inline-flex items-center text-sm text-slate-700 dark:text-slate-200 hover:text-brand-700 px-2 py-1.5"
       >
         {t("nav.login")}
       </button>
@@ -88,15 +88,15 @@ export function AuthButton() {
           onClick={close}
         >
           <div
-            className="bg-white rounded-2xl shadow-xl w-full max-w-lg max-h-[92vh] overflow-y-auto"
+            className="bg-white dark:bg-slate-900 rounded-2xl shadow-xl w-full max-w-lg max-h-[92vh] overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200 dark:border-slate-800">
               <h2 className="text-lg font-bold">{t("auth.title")}</h2>
               <button
                 type="button"
                 onClick={close}
-                className="text-slate-500 hover:text-slate-800 text-2xl leading-none"
+                className="text-slate-500 dark:text-slate-400 hover:text-slate-800 text-2xl leading-none"
                 aria-label={t("auth.close")}
               >
                 ×
@@ -106,7 +106,7 @@ export function AuthButton() {
             {submitted ? (
               <div className="p-6 text-center">
                 <div className="text-4xl mb-2">👋</div>
-                <p className="text-slate-700 mb-4">
+                <p className="text-slate-700 dark:text-slate-200 mb-4">
                   {tab === "buyer"
                     ? t("auth.success.buyer")
                     : t("auth.success.seller")}
@@ -121,7 +121,7 @@ export function AuthButton() {
               </div>
             ) : (
               <>
-                <div className="grid grid-cols-2 border-b border-slate-200">
+                <div className="grid grid-cols-2 border-b border-slate-200 dark:border-slate-800">
                   <button
                     type="button"
                     onClick={() => setTab("buyer")}
@@ -203,7 +203,7 @@ export function AuthButton() {
                     {mode === "login" ? t("auth.login") : t("auth.register")}
                   </button>
 
-                  <div className="text-center text-sm text-slate-600">
+                  <div className="text-center text-sm text-slate-600 dark:text-slate-300">
                     {mode === "login" ? (
                       <>
                         {t("auth.no_account")}{" "}
@@ -229,7 +229,7 @@ export function AuthButton() {
                     )}
                   </div>
 
-                  <div className="text-xs text-slate-500 bg-slate-50 border border-slate-200 rounded-lg p-3">
+                  <div className="text-xs text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-3">
                     {t("auth.demo_note")}
                   </div>
                 </form>

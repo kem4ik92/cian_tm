@@ -97,7 +97,7 @@ export default function Home() {
       {/* Cities */}
       <section className="max-w-7xl mx-auto px-4 py-12">
         <div className="flex items-end justify-between mb-6">
-          <h2 className="text-2xl font-bold text-slate-900">
+          <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100">
             {t("home.popular_cities")}
           </h2>
           <Link
@@ -112,7 +112,7 @@ export default function Home() {
             <Link
               key={city.id}
               href={`/search?city=${city.id}`}
-              className="relative aspect-[4/3] rounded-xl overflow-hidden group border border-slate-200"
+              className="relative aspect-[4/3] rounded-xl overflow-hidden group border border-slate-200 dark:border-slate-800"
             >
               <Image
                 src={CITY_IMAGES[city.id] ?? HERO_IMAGE}
@@ -136,7 +136,7 @@ export default function Home() {
       {/* Newest listings */}
       <section className="max-w-7xl mx-auto px-4 py-12">
         <div className="flex items-end justify-between mb-6">
-          <h2 className="text-2xl font-bold text-slate-900">
+          <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100">
             {t("home.newest")}
           </h2>
           <Link
@@ -156,32 +156,32 @@ export default function Home() {
       {/* Features */}
       <section className="max-w-7xl mx-auto px-4 py-12">
         <div className="grid gap-4 md:grid-cols-3">
-          <div className="bg-white rounded-xl border border-slate-200 p-6">
+          <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6">
             <div className="h-10 w-10 rounded-lg bg-brand-100 text-brand-700 flex items-center justify-center font-bold mb-3">
               ⌕
             </div>
-            <h3 className="font-semibold mb-1 text-slate-900">
+            <h3 className="font-semibold mb-1 text-slate-900 dark:text-slate-100">
               {t("home.feature1.title")}
             </h3>
-            <p className="text-sm text-slate-600">{t("home.feature1.desc")}</p>
+            <p className="text-sm text-slate-600 dark:text-slate-300">{t("home.feature1.desc")}</p>
           </div>
-          <div className="bg-white rounded-xl border border-slate-200 p-6">
+          <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6">
             <div className="h-10 w-10 rounded-lg bg-brand-100 text-brand-700 flex items-center justify-center font-bold mb-3">
               ₮
             </div>
-            <h3 className="font-semibold mb-1 text-slate-900">
+            <h3 className="font-semibold mb-1 text-slate-900 dark:text-slate-100">
               {t("home.feature2.title")}
             </h3>
-            <p className="text-sm text-slate-600">{t("home.feature2.desc")}</p>
+            <p className="text-sm text-slate-600 dark:text-slate-300">{t("home.feature2.desc")}</p>
           </div>
-          <div className="bg-white rounded-xl border border-slate-200 p-6">
+          <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6">
             <div className="h-10 w-10 rounded-lg bg-brand-100 text-brand-700 flex items-center justify-center font-bold mb-3">
               ＋
             </div>
-            <h3 className="font-semibold mb-1 text-slate-900">
+            <h3 className="font-semibold mb-1 text-slate-900 dark:text-slate-100">
               {t("home.feature3.title")}
             </h3>
-            <p className="text-sm text-slate-600">{t("home.feature3.desc")}</p>
+            <p className="text-sm text-slate-600 dark:text-slate-300">{t("home.feature3.desc")}</p>
           </div>
         </div>
       </section>

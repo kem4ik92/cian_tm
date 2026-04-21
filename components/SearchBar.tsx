@@ -36,7 +36,7 @@ export function SearchBar({
   return (
     <form
       onSubmit={submit}
-      className="bg-white rounded-2xl shadow-xl border border-slate-200 p-2 md:p-3"
+      className="bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-800 p-2 md:p-3"
     >
       <div className="flex gap-2 mb-2">
         <button

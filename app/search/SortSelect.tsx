@@ -23,7 +23,7 @@ export function SortSelect({ current }: { current: string }) {
   };
 
   return (
-    <label className="text-sm text-slate-700 flex items-center gap-2">
+    <label className="text-sm text-slate-700 dark:text-slate-200 flex items-center gap-2">
       {t("search.sort")}
       <select
         className="input py-1.5 w-auto"

@@ -17,9 +17,9 @@ export function ListingCard({ listing }: { listing: Listing }) {
   return (
     <Link
       href={`/offer/${listing.id}`}
-      className="group block bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg hover:border-brand-300 transition-all"
+      className="group block bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:shadow-lg hover:border-brand-300 transition-all"
     >
-      <div className="relative aspect-[4/3] bg-slate-100">
+      <div className="relative aspect-[4/3] bg-slate-100 dark:bg-slate-800">
         <Image
           src={listing.images[0]}
           alt={listing.title}
@@ -37,18 +37,18 @@ export function ListingCard({ listing }: { listing: Listing }) {
               ? t("listing.sale")
               : t("listing.rent")}
           </span>
-          <span className="text-xs font-medium px-2 py-1 rounded-full bg-white text-slate-800 shadow">
+          <span className="text-xs font-medium px-2 py-1 rounded-full bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 shadow">
             {t(`prop.${listing.propertyType}` as const)}
           </span>
         </div>
       </div>
 
       <div className="p-4">
-        <div className="text-lg font-bold text-slate-900">{priceLabel}</div>
-        <div className="mt-1 text-sm text-slate-700 line-clamp-1">
+        <div className="text-lg font-bold text-slate-900 dark:text-slate-100">{priceLabel}</div>
+        <div className="mt-1 text-sm text-slate-700 dark:text-slate-200 line-clamp-1">
           {listing.title}
         </div>
-        <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-xs text-slate-600">
+        <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-xs text-slate-600 dark:text-slate-300">
           {listing.rooms ? (
             <span>
               {listing.rooms}
@@ -64,10 +64,10 @@ export function ListingCard({ listing }: { listing: Listing }) {
             </span>
           ) : null}
         </div>
-        <div className="mt-2 text-sm text-slate-500 truncate">
+        <div className="mt-2 text-sm text-slate-500 dark:text-slate-400 truncate">
           {cityName(listing.cityId)}, {listing.district}
         </div>
-        <div className="mt-2 text-xs text-slate-400">
+        <div className="mt-2 text-xs text-slate-400 dark:text-slate-500">
           {relativeDateI18n(listing.publishedAt, lang)}
         </div>
       </div>

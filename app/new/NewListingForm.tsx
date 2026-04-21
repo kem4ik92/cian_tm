@@ -31,12 +31,12 @@ export function NewListingForm() {
 
   if (submitted) {
     return (
-      <div className="bg-white border border-slate-200 rounded-xl p-8 text-center">
+      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-8 text-center">
         <div className="text-4xl mb-3">✨</div>
-        <h2 className="text-xl font-semibold mb-2 text-slate-900">
+        <h2 className="text-xl font-semibold mb-2 text-slate-900 dark:text-slate-100">
           {t("new.success.title")}
         </h2>
-        <p className="text-slate-700">{t("new.success.desc")}</p>
+        <p className="text-slate-700 dark:text-slate-200">{t("new.success.desc")}</p>
         <button
           type="button"
           onClick={() => setSubmitted(false)}
@@ -51,7 +51,7 @@ export function NewListingForm() {
   return (
     <form
       onSubmit={onSubmit}
-      className="space-y-5 bg-white border border-slate-200 rounded-xl p-6"
+      className="space-y-5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-6"
     >
       {error ? (
         <div className="bg-red-50 border border-red-200 text-red-800 text-sm rounded-lg p-3">
