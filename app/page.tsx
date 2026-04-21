@@ -1,101 +1,190 @@
+"use client";
+
+import Link from "next/link";
 import Image from "next/image";
+import { useMemo } from "react";
+import { SearchBar } from "@/components/SearchBar";
+import { ListingCard } from "@/components/ListingCard";
+import { HeroSlideshow } from "@/components/HeroSlideshow";
+import { CITIES } from "@/lib/cities";
+import { LISTINGS } from "@/lib/data";
+import { HERO_IMAGE, CITY_IMAGES } from "@/lib/images";
+import { useApp } from "@/components/I18nProvider";
+import { pluralListings } from "@/lib/i18n";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const { t, lang } = useApp();
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  const newest = [...LISTINGS]
+    .sort(
+      (a, b) =>
+        new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),
+    )
+    .slice(0, 8);
+
+  const cityCounts = CITIES.map((c) => ({
+    city: c,
+    count: LISTINGS.filter((l) => l.cityId === c.id).length,
+  })).filter((x) => x.count > 0);
+
+  const heroImages = useMemo(() => {
+    const picks: string[] = [];
+    const seen = new Set<string>();
+    for (const l of LISTINGS) {
+      const img = l.images?.[0];
+      if (img && !seen.has(img)) {
+        seen.add(img);
+        picks.push(img);
+      }
+      if (picks.length >= 8) break;
+    }
+    return picks.length ? picks : [HERO_IMAGE];
+  }, []);
+
+  return (
+    <>
+      {/* Hero */}
+      <section className="relative isolate overflow-hidden">
+        <HeroSlideshow images={heroImages} />
+
+        <div className="relative z-10 max-w-7xl mx-auto px-4 py-10 sm:py-16 md:py-24">
+          <h1 className="text-white text-2xl sm:text-3xl md:text-5xl font-bold max-w-3xl drop-shadow">
+            {t("hero.title")}
+          </h1>
+          <p className="text-white/90 mt-3 max-w-2xl drop-shadow text-sm sm:text-base">
+            {t("hero.subtitle")}
+          </p>
+
+          <div className="mt-8 max-w-4xl">
+            <SearchBar />
+          </div>
+
+          <div className="mt-6 flex flex-wrap gap-2">
+            <Link
+              href="/search?deal=sale&type=apartment&city=ashgabat"
+              className="inline-flex items-center rounded-full bg-white/95 hover:bg-white px-3 py-1 text-xs font-medium text-brand-800"
+            >
+              {t("hero.chip.apt_ashgabat")}
+            </Link>
+            <Link
+              href="/search?deal=rent&type=apartment"
+              className="inline-flex items-center rounded-full bg-white/95 hover:bg-white px-3 py-1 text-xs font-medium text-brand-800"
+            >
+              {t("hero.chip.rent_apt")}
+            </Link>
+            <Link
+              href="/search?type=house"
+              className="inline-flex items-center rounded-full bg-white/95 hover:bg-white px-3 py-1 text-xs font-medium text-brand-800"
+            >
+              {t("hero.chip.private_houses")}
+            </Link>
+            <Link
+              href="/search?deal=rent&type=commercial"
+              className="inline-flex items-center rounded-full bg-white/95 hover:bg-white px-3 py-1 text-xs font-medium text-brand-800"
+            >
+              {t("hero.chip.offices")}
+            </Link>
+            <Link
+              href="/search?city=turkmenbashi"
+              className="inline-flex items-center rounded-full bg-white/95 hover:bg-white px-3 py-1 text-xs font-medium text-brand-800"
+            >
+              {t("hero.chip.avaza")}
+            </Link>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      </section>
+
+      {/* Cities */}
+      <section className="max-w-7xl mx-auto px-4 py-12">
+        <div className="flex items-end justify-between mb-6">
+          <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100">
+            {t("home.popular_cities")}
+          </h2>
+          <Link
+            href="/search"
+            className="text-sm text-brand-700 hover:underline"
+          >
+            {t("home.all_listings")}
+          </Link>
+        </div>
+        <div className="grid gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          {cityCounts.map(({ city, count }) => (
+            <Link
+              key={city.id}
+              href={`/search?city=${city.id}`}
+              className="relative aspect-[4/3] rounded-xl overflow-hidden group border border-slate-200 dark:border-slate-800"
+            >
+              <Image
+                src={CITY_IMAGES[city.id] ?? HERO_IMAGE}
+                alt={city.name}
+                fill
+                sizes="(max-width: 768px) 50vw, 25vw"
+                className="object-cover group-hover:scale-105 transition-transform duration-300"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+              <div className="absolute bottom-3 left-3 right-3 text-white">
+                <div className="text-lg font-semibold">{city.name}</div>
+                <div className="text-xs opacity-90">
+                  {count} {pluralListings(lang, count)}
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* Newest listings */}
+      <section className="max-w-7xl mx-auto px-4 py-12">
+        <div className="flex items-end justify-between mb-6">
+          <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100">
+            {t("home.newest")}
+          </h2>
+          <Link
+            href="/search"
+            className="text-sm text-brand-700 hover:underline"
+          >
+            {t("home.see_all")}
+          </Link>
+        </div>
+        <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+          {newest.map((l) => (
+            <ListingCard key={l.id} listing={l} />
+          ))}
+        </div>
+      </section>
+
+      {/* Features */}
+      <section className="max-w-7xl mx-auto px-4 py-12">
+        <div className="grid gap-4 md:grid-cols-3">
+          <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6">
+            <div className="h-10 w-10 rounded-lg bg-brand-100 text-brand-700 flex items-center justify-center font-bold mb-3">
+              ⌕
+            </div>
+            <h3 className="font-semibold mb-1 text-slate-900 dark:text-slate-100">
+              {t("home.feature1.title")}
+            </h3>
+            <p className="text-sm text-slate-600 dark:text-slate-300">{t("home.feature1.desc")}</p>
+          </div>
+          <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6">
+            <div className="h-10 w-10 rounded-lg bg-brand-100 text-brand-700 flex items-center justify-center font-bold mb-3">
+              ₮
+            </div>
+            <h3 className="font-semibold mb-1 text-slate-900 dark:text-slate-100">
+              {t("home.feature2.title")}
+            </h3>
+            <p className="text-sm text-slate-600 dark:text-slate-300">{t("home.feature2.desc")}</p>
+          </div>
+          <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6">
+            <div className="h-10 w-10 rounded-lg bg-brand-100 text-brand-700 flex items-center justify-center font-bold mb-3">
+              ＋
+            </div>
+            <h3 className="font-semibold mb-1 text-slate-900 dark:text-slate-100">
+              {t("home.feature3.title")}
+            </h3>
+            <p className="text-sm text-slate-600 dark:text-slate-300">{t("home.feature3.desc")}</p>
+          </div>
+        </div>
+      </section>
+    </>
   );
 }
