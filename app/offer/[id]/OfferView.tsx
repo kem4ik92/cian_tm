@@ -5,7 +5,7 @@ import { Gallery } from "@/components/Gallery";
 import { ContactReveal } from "@/components/ContactReveal";
 import { ListingCard } from "@/components/ListingCard";
 import { cityById, cityName } from "@/lib/cities";
-import { formatPrice } from "@/lib/format";
+import { formatPrice, pricePerSqm } from "@/lib/format";
 import type { Listing } from "@/lib/types";
 import { useApp } from "@/components/I18nProvider";
 import { formatDateI18n } from "@/lib/dateI18n";
@@ -30,7 +30,7 @@ export function OfferView({
         ? t("offer.agent")
         : t("offer.agency");
 
-  const price = formatPrice(listing.price);
+  const price = formatPrice(listing.price, lang);
   const priceLabel =
     listing.dealType === "rent" ? `${price} ${t("listing.per_month")}` : price;
 
@@ -161,10 +161,7 @@ export function OfferView({
             </div>
             {listing.area ? (
               <div className="text-sm text-slate-600 mt-1">
-                {Math.round(listing.price / listing.area).toLocaleString(
-                  "ru-RU",
-                )}{" "}
-                ТМТ / м²
+                {pricePerSqm(listing.price, listing.area, lang)}
               </div>
             ) : null}
           </div>

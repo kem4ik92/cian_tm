@@ -1,14 +1,41 @@
-export function formatPrice(price: number, currency: "TMT" = "TMT"): string {
-  const formatted = new Intl.NumberFormat("ru-RU").format(price);
-  return `${formatted} ${currency === "TMT" ? "ТМТ" : currency}`;
+import type { Lang } from "./i18n";
+
+const LOCALE: Record<Lang, string> = {
+  ru: "ru-RU",
+  tk: "en-GB",
+  en: "en-GB",
+};
+
+const CURRENCY_LABEL: Record<Lang, string> = {
+  ru: "ТМТ",
+  tk: "TMT",
+  en: "TMT",
+};
+
+export function formatPrice(price: number, lang: Lang = "ru"): string {
+  const formatted = new Intl.NumberFormat(LOCALE[lang]).format(price);
+  return `${formatted} ${CURRENCY_LABEL[lang]}`;
+}
+
+export function pricePerSqm(
+  price: number,
+  area: number,
+  lang: Lang = "ru",
+): string {
+  if (!area) return "";
+  return `${new Intl.NumberFormat(LOCALE[lang]).format(Math.round(price / area))} ${CURRENCY_LABEL[lang]} / м²`;
 }
 
 export function formatPriceCompact(
   price: number,
   dealType: "sale" | "rent",
+  lang: Lang = "ru",
 ): string {
-  const base = formatPrice(price);
-  return dealType === "rent" ? `${base} / мес.` : base;
+  const base = formatPrice(price, lang);
+  if (dealType !== "rent") return base;
+  const perMonth =
+    lang === "ru" ? "/ мес." : lang === "tk" ? "/ aý" : "/ mo";
+  return `${base} ${perMonth}`;
 }
 
 const DEAL_LABEL: Record<"sale" | "rent", string> = {

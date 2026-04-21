@@ -25,12 +25,15 @@ export function SearchClient() {
       ? params.deal === "sale"
         ? t("deal.sale")
         : t("deal.rent")
-      : t("prop.apartment.pl");
-    const typePart = params.type
-      ? t(`prop.${params.type}.pl` as const).toLowerCase()
       : "";
+    const typePart = params.type
+      ? params.deal
+        ? t(`prop.${params.type}.pl` as const).toLowerCase()
+        : t(`prop.${params.type}.pl` as const)
+      : "";
+    const head = dealPart || typePart ? [dealPart, typePart].filter(Boolean).join(" ") : t("search.all_listings");
     const cityPart = params.cityId ? `— ${cityName(params.cityId)}` : "";
-    const title = [dealPart, typePart, cityPart].filter(Boolean).join(" ");
+    const title = [head, cityPart].filter(Boolean).join(" ");
     return { params, results, title };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sp, t]);

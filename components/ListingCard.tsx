@@ -10,7 +10,7 @@ import { relativeDateI18n } from "@/lib/dateI18n";
 
 export function ListingCard({ listing }: { listing: Listing }) {
   const { t, lang } = useApp();
-  const price = formatPrice(listing.price);
+  const price = formatPrice(listing.price, lang);
   const priceLabel =
     listing.dealType === "rent" ? `${price} ${t("listing.per_month")}` : price;
 

@@ -47,6 +47,7 @@ export const DICT = {
     "search.no_results": "По выбранным фильтрам ничего не найдено.",
     "search.reset": "Сбросить фильтры",
     "search.found": "Найдено:",
+    "search.all_listings": "Все объявления",
 
     "home.popular_cities": "Популярные города",
     "home.all_listings": "Все объявления →",
@@ -239,6 +240,7 @@ export const DICT = {
     "search.no_results": "Saýlanan süzgüçler boýunça hiç zat tapylmady.",
     "search.reset": "Süzgüçleri arassala",
     "search.found": "Tapyldy:",
+    "search.all_listings": "Ähli bildirişler",
 
     "home.popular_cities": "Meşhur şäherler",
     "home.all_listings": "Ähli bildirişler →",
@@ -432,6 +434,7 @@ export const DICT = {
     "search.no_results": "Nothing matches the selected filters.",
     "search.reset": "Reset filters",
     "search.found": "Found:",
+    "search.all_listings": "All listings",
 
     "home.popular_cities": "Popular cities",
     "home.all_listings": "All listings →",

@@ -79,11 +79,11 @@ export function imagesFor(
 }
 
 export const HERO_IMAGE =
-  "https://images.unsplash.com/photo-1545158539-1709fd0c9315?w=1920&q=80&auto=format&fit=crop";
+  "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1920&q=80&auto=format&fit=crop";
 
 export const CITY_IMAGES: Record<string, string> = {
   ashgabat:
-    "https://images.unsplash.com/photo-1583421088014-3d3d9e9b9c2c?w=1200&q=80&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1200&q=80&auto=format&fit=crop",
   turkmenabat:
     "https://images.unsplash.com/photo-1518684079-3c830dcef090?w=1200&q=80&auto=format&fit=crop",
   mary:

@@ -2,8 +2,10 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { useMemo } from "react";
 import { SearchBar } from "@/components/SearchBar";
 import { ListingCard } from "@/components/ListingCard";
+import { HeroSlideshow } from "@/components/HeroSlideshow";
 import { CITIES } from "@/lib/cities";
 import { LISTINGS } from "@/lib/data";
 import { HERO_IMAGE, CITY_IMAGES } from "@/lib/images";
@@ -25,20 +27,25 @@ export default function Home() {
     count: LISTINGS.filter((l) => l.cityId === c.id).length,
   })).filter((x) => x.count > 0);
 
+  const heroImages = useMemo(() => {
+    const picks: string[] = [];
+    const seen = new Set<string>();
+    for (const l of LISTINGS) {
+      const img = l.images?.[0];
+      if (img && !seen.has(img)) {
+        seen.add(img);
+        picks.push(img);
+      }
+      if (picks.length >= 8) break;
+    }
+    return picks.length ? picks : [HERO_IMAGE];
+  }, []);
+
   return (
     <>
       {/* Hero */}
       <section className="relative overflow-hidden">
-        <div className="absolute inset-0 -z-10">
-          <Image
-            src={HERO_IMAGE}
-            alt=""
-            fill
-            priority
-            className="object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-slate-950/85 via-slate-900/75 to-brand-900/85" />
-        </div>
+        <HeroSlideshow images={heroImages} />
 
         <div className="max-w-7xl mx-auto px-4 py-16 md:py-24">
           <h1 className="text-white text-3xl md:text-5xl font-bold max-w-3xl drop-shadow">
