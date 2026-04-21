@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Filters } from "@/components/Filters";
 import { ListingCard } from "@/components/ListingCard";
 import { cityName } from "@/lib/cities";
@@ -14,6 +14,20 @@ export function SearchClient() {
   const sp = useSearchParams();
   const { t } = useApp();
   const [filtersOpen, setFiltersOpen] = useState(false);
+
+  useEffect(() => {
+    if (!filtersOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setFiltersOpen(false);
+    };
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = prev;
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [filtersOpen]);
 
   const { params, results, title } = useMemo(() => {
     const record: Record<string, string> = {};
@@ -60,15 +74,51 @@ export function SearchClient() {
       </div>
 
       <div className="grid gap-6 lg:grid-cols-[280px_1fr]">
-        <div className={filtersOpen ? "" : "hidden lg:block"}>
+        <div className="hidden lg:block">
           <Filters />
         </div>
+
+        {filtersOpen ? (
+          <div
+            className="lg:hidden fixed inset-0 z-40 bg-slate-900/50"
+            onClick={() => setFiltersOpen(false)}
+          >
+            <div
+              className="absolute top-0 right-0 h-full w-[88%] max-w-sm bg-[var(--background)] shadow-xl overflow-y-auto"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="sticky top-0 flex items-center justify-between gap-2 px-4 py-3 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 z-10">
+                <span className="text-base font-semibold text-slate-900 dark:text-slate-100">
+                  {t("filters.open")}
+                </span>
+                <button
+                  type="button"
+                  onClick={() => setFiltersOpen(false)}
+                  className="h-9 w-9 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-xl text-slate-600 dark:text-slate-300"
+                  aria-label={t("filters.close")}
+                >
+                  ×
+                </button>
+              </div>
+              <div className="p-3">
+                <Filters />
+                <button
+                  type="button"
+                  onClick={() => setFiltersOpen(false)}
+                  className="btn-primary w-full mt-4"
+                >
+                  {t("search.found")} {results.length}
+                </button>
+              </div>
+            </div>
+          </div>
+        ) : null}
 
         <div>
           <div className="mb-4 flex items-center justify-between gap-2">
             <button
               type="button"
-              onClick={() => setFiltersOpen((v) => !v)}
+              onClick={() => setFiltersOpen(true)}
               className="btn-outline text-sm lg:hidden inline-flex items-center gap-1.5"
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -76,7 +126,7 @@ export function SearchClient() {
                 <line x1="7" y1="12" x2="17" y2="12" />
                 <line x1="10" y1="18" x2="14" y2="18" />
               </svg>
-              {filtersOpen ? t("filters.close") : t("filters.open")}
+              {t("filters.open")}
             </button>
             <SortSelect current={params.sort ?? "newest"} />
           </div>

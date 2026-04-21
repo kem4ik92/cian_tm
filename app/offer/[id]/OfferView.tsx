@@ -154,7 +154,7 @@ export function OfferView({
           </section>
         </div>
 
-        <aside className="lg:sticky lg:top-20 h-fit space-y-4 order-first lg:order-last">
+        <aside className="lg:sticky lg:top-20 h-fit space-y-4 lg:order-last">
           <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-4 sm:p-6">
             <div className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-slate-100 break-words">
               {priceLabel}
