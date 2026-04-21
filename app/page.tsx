@@ -44,10 +44,10 @@ export default function Home() {
   return (
     <>
       {/* Hero */}
-      <section className="relative overflow-hidden">
+      <section className="relative isolate overflow-hidden">
         <HeroSlideshow images={heroImages} />
 
-        <div className="max-w-7xl mx-auto px-4 py-16 md:py-24">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 py-16 md:py-24">
           <h1 className="text-white text-3xl md:text-5xl font-bold max-w-3xl drop-shadow">
             {t("hero.title")}
           </h1>

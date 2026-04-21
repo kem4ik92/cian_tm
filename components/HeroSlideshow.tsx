@@ -17,7 +17,7 @@ export function HeroSlideshow({ images }: { images: string[] }) {
   if (images.length === 0) return null;
 
   return (
-    <div className="absolute inset-0 -z-10 overflow-hidden">
+    <div className="absolute inset-0 overflow-hidden">
       {images.map((src, i) => (
         <Image
           key={src + i}
@@ -31,7 +31,7 @@ export function HeroSlideshow({ images }: { images: string[] }) {
           }`}
         />
       ))}
-      <div className="absolute inset-0 bg-gradient-to-b from-slate-950/85 via-slate-900/70 to-slate-950/90" />
+      <div className="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-slate-900/65 to-slate-950/85" />
     </div>
   );
 }
