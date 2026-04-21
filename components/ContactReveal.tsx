@@ -4,7 +4,7 @@ import { useState } from "react";
 
 export function ContactReveal({ phone }: { phone: string }) {
   const [shown, setShown] = useState(false);
-  const masked = phone.replace(/\d(?=\d{2})/g, "•");
+  const masked = phone.slice(0, 4) + phone.slice(4).replace(/\d/g, "•");
 
   return (
     <div>

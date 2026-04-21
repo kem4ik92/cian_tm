@@ -125,7 +125,12 @@ export function NewListingForm() {
         </div>
         <div>
           <label className="block text-sm font-medium mb-1">Район</label>
-          <select name="district" className="input" defaultValue="">
+          <select
+            name="district"
+            className="input"
+            key={cityId}
+            defaultValue=""
+          >
             <option value="">— не выбран —</option>
             {city?.districts.map((d) => (
               <option key={d} value={d}>
