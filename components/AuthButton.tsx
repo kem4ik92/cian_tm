@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useApp } from "./I18nProvider";
 
 type Tab = "buyer" | "seller";
@@ -13,10 +13,16 @@ export function AuthButton() {
   const [mode, setMode] = useState<Mode>("register");
   const [submitted, setSubmitted] = useState(false);
 
+  const close = useCallback(() => {
+    setOpen(false);
+    setSubmitted(false);
+    setMode("register");
+  }, []);
+
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
+      if (e.key === "Escape") close();
     };
     document.addEventListener("keydown", onKey);
     const prev = document.body.style.overflow;
@@ -25,7 +31,7 @@ export function AuthButton() {
       document.removeEventListener("keydown", onKey);
       document.body.style.overflow = prev;
     };
-  }, [open]);
+  }, [open, close]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -33,13 +39,7 @@ export function AuthButton() {
     const name = String(fd.get("name") || "Гость").trim();
     const email = String(fd.get("email") || "").trim();
     login({ role: tab, name, email });
-    setSubmitted(true);
-  };
-
-  const close = () => {
-    setOpen(false);
-    setSubmitted(false);
-    setMode("register");
+    close();
   };
 
   if (user) {

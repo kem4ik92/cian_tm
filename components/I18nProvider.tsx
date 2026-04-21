@@ -58,8 +58,10 @@ export function I18nProvider({ children }: { children: ReactNode }) {
     try {
       const storedLang =
         (localStorage.getItem("jay.lang") as Lang | null) ?? null;
-      if (storedLang && ["ru", "tk", "en"].includes(storedLang))
+      if (storedLang && ["ru", "tk", "en"].includes(storedLang)) {
         setLangState(storedLang);
+        document.documentElement.lang = storedLang;
+      }
       const u = localStorage.getItem("jay.user");
       if (u) setUser(JSON.parse(u));
       const storedTheme = localStorage.getItem("jay.theme") as ThemeMode | null;
