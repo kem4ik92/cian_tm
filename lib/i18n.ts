@@ -187,6 +187,21 @@ export const DICT = {
       "Сервис объявлений о недвижимости в Туркменистане: продажа, аренда, коммерческая недвижимость в Ашхабаде, Туркменабате, Мары, Дашогузе, Балканабате и Туркменбаши.",
     "footer.rights": "прототип. Все права не защищены.",
 
+    "chat.title": "Помощник Jay.tm",
+    "chat.subtitle": "ИИ-ассистент по недвижимости",
+    "chat.open": "Открыть чат",
+    "chat.close": "Закрыть чат",
+    "chat.placeholder": "Задайте вопрос об объявлениях, ценах или районах…",
+    "chat.send": "Отправить",
+    "chat.thinking": "Печатает…",
+    "chat.reset": "Очистить диалог",
+    "chat.greeting": "Здравствуйте! Я ИИ-помощник Jay.tm. Подскажу по городам, районам, типам недвижимости и помогу сформулировать запрос на поиск.",
+    "chat.disabled": "Чат не настроен. Добавьте NEXT_PUBLIC_OPENROUTER_API_KEY в .env.local и пересоберите проект.",
+    "chat.error": "Не удалось получить ответ. Попробуйте ещё раз.",
+    "chat.suggest.1": "Квартиры в Ашхабаде до 400 000 ТМТ",
+    "chat.suggest.2": "Что посмотреть в Аваза?",
+    "chat.suggest.3": "Чем отличается Беркарарлык от Копетдага?",
+
     "about.title": "О проекте Jay.tm",
     "about.p1":
       "Jay.tm — это прототип сервиса объявлений о недвижимости для Туркменистана, созданный по аналогии с крупными площадками вроде Циан. Проект показывает, как может выглядеть такой сервис для туркменского рынка: с ценами в манатах (ТМТ), привычными названиями городов и районов, и учётом местных особенностей.",
@@ -389,6 +404,21 @@ export const DICT = {
       "Türkmenistandaky gozgalmaýan emläk bildirişleri hyzmaty: Aşgabat, Türkmenabat, Mary, Daşoguz, Balkanabat we Türkmenbaşyda satuw, kärende, täjirçilik emläk.",
     "footer.rights": "prototip. Ähli hukuklar goralanok.",
 
+    "chat.title": "Jay.tm kömekçisi",
+    "chat.subtitle": "Gozgalmaýan emläk boýunça AI kömekçi",
+    "chat.open": "Çaty açmak",
+    "chat.close": "Çaty ýapmak",
+    "chat.placeholder": "Bildirişler, bahalar ýa-da etraplar barada soraň…",
+    "chat.send": "Ibermek",
+    "chat.thinking": "Ýazýar…",
+    "chat.reset": "Söhbetdeşligi arassalamak",
+    "chat.greeting": "Salam! Men Jay.tm-iň AI kömekçisi. Şäherler, etraplar we emläk görnüşleri boýunça size kömek ederin.",
+    "chat.disabled": "Çat sazlanmadyk. .env.local-a NEXT_PUBLIC_OPENROUTER_API_KEY goşuň we taslamany täzeden guruň.",
+    "chat.error": "Jogap almak başartmady. Täzeden synanyşyň.",
+    "chat.suggest.1": "Aşgabatdaky 400 000 TMT çenli jaýlar",
+    "chat.suggest.2": "Awazada näme görmeli?",
+    "chat.suggest.3": "Berkararlyk bilen Köpetdagyň tapawudy näme?",
+
     "about.title": "Jay.tm taslamasy barada",
     "about.p1":
       "Jay.tm — bu Cian.ru ýaly uly platformalara meňzeş, Türkmenistan üçin gozgalmaýan emläk bildirişleriniň prototipidir. Taslama türkmen bazary üçin şeýle hyzmatyň nähili görkezip biljekdigini görkezýär: bahalar manatda (TMT), adaty şäher we etrap atlary, ýerli aýratynlyklar göz öňünde tutulyp.",
@@ -590,6 +620,21 @@ export const DICT = {
     "footer.desc":
       "Real estate classifieds for Turkmenistan: sales, rentals and commercial property in Ashgabat, Turkmenabat, Mary, Dashoguz, Balkanabat and Turkmenbashi.",
     "footer.rights": "prototype. All rights reserved… not really.",
+
+    "chat.title": "Jay.tm assistant",
+    "chat.subtitle": "AI helper for real estate",
+    "chat.open": "Open chat",
+    "chat.close": "Close chat",
+    "chat.placeholder": "Ask about listings, prices or districts…",
+    "chat.send": "Send",
+    "chat.thinking": "Typing…",
+    "chat.reset": "Clear chat",
+    "chat.greeting": "Hi! I'm the Jay.tm AI assistant. I can help with cities, districts, property types and refining your search.",
+    "chat.disabled": "Chat is not configured. Add NEXT_PUBLIC_OPENROUTER_API_KEY to .env.local and rebuild.",
+    "chat.error": "Couldn't get a response. Please try again.",
+    "chat.suggest.1": "Apartments in Ashgabat under 400,000 TMT",
+    "chat.suggest.2": "What to see in Avaza?",
+    "chat.suggest.3": "Berkararlyk vs Kopetdag district — what's the difference?",
 
     "about.title": "About Jay.tm",
     "about.p1":

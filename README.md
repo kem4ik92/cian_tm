@@ -105,6 +105,31 @@ Developer ($99/год) для публикации в App Store.
     --splashBackgroundColor '#eef2f6'
   ```
 
+## Чат-бот (AI-помощник)
+
+В правом нижнем углу всех страниц есть кнопка чата — ИИ-помощник по
+недвижимости Туркменистана. Сейчас он ходит в [OpenRouter](https://openrouter.ai/)
+прямо из браузера.
+
+**⚠️ Безопасность.** Статический экспорт означает, что ключ
+`NEXT_PUBLIC_OPENROUTER_API_KEY` попадает в клиентский JS-бандл — его увидит
+любой, кто откроет DevTools. Для прода нужно вынести вызов на свой бэкенд и
+хранить ключ только на сервере.
+
+Настройка (локально и при сборке):
+
+```bash
+cp .env.example .env.local
+# в .env.local указать:
+# NEXT_PUBLIC_OPENROUTER_API_KEY=sk-or-v1-...
+# NEXT_PUBLIC_OPENROUTER_MODEL=google/gemma-4-31b-it:free
+npm run build
+```
+
+Если основная модель временно `429 rate-limited`, клиент автоматически
+пробует запасные бесплатные (`google/gemma-3-27b-it:free`,
+`meta-llama/llama-3.3-70b-instruct:free`, `google/gemma-3-12b-it:free`).
+
 ## Структура проекта
 
 ```
