@@ -29,8 +29,9 @@ function buildSystemPrompt(lang: "ru" | "tk" | "en"): string {
     "Формат ссылки на поиск: /search?deal=<sale|rent>&type=<apartment|house|room|commercial|land>&city=<ID>",
     `ID городов (используй ИМЕННО их, не русские названия!): ${cityTable}.`,
     `Районы можно передать параметром &district=<название> дословно: ${districtHints}.`,
-    "Диапазон цен: &price_min=... &price_max=... (в ТМТ). Комнаты: &rooms=1|2|3|4.",
-    "Сортировка: &sort=newest|price_asc|price_desc|area_desc.",
+    "Диапазон цен: &minPrice=... &maxPrice=... (в ТМТ).",
+    "Комнаты: &minRooms=1|2|3|4 (и/или &maxRooms=...). Площадь: &minArea=... &maxArea=....",
+    "Поисковая строка: &q=<текст>. Сортировка: &sort=newest|price_asc|price_desc|area_desc.",
     "Ссылки оформляй markdown-синтаксисом: [текст](/search?...). Не придумывай несуществующие параметры и значения.",
     "Если точный объект неизвестен — предлагай /search со связными фильтрами, а не /offer/<id>.",
   ];
