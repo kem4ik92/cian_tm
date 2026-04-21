@@ -117,6 +117,7 @@ export function Filters() {
         <h3 className="text-sm font-semibold mb-2">Цена, ТМТ</h3>
         <div className="grid grid-cols-2 gap-2">
           <input
+            key={`minPrice-${current.minPrice}`}
             className="input"
             placeholder="от"
             inputMode="numeric"
@@ -124,6 +125,7 @@ export function Filters() {
             onBlur={(e) => update({ minPrice: e.target.value })}
           />
           <input
+            key={`maxPrice-${current.maxPrice}`}
             className="input"
             placeholder="до"
             inputMode="numeric"
@@ -159,6 +161,7 @@ export function Filters() {
         <h3 className="text-sm font-semibold mb-2">Площадь, м²</h3>
         <div className="grid grid-cols-2 gap-2">
           <input
+            key={`minArea-${current.minArea}`}
             className="input"
             placeholder="от"
             inputMode="numeric"
@@ -166,6 +169,7 @@ export function Filters() {
             onBlur={(e) => update({ minArea: e.target.value })}
           />
           <input
+            key={`maxArea-${current.maxArea}`}
             className="input"
             placeholder="до"
             inputMode="numeric"

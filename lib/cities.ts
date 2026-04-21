@@ -15,6 +15,7 @@ export const CITIES: City[] = [
     name: "Ашхабад",
     nameTk: "Aşgabat",
     districts: [
+      "Центр",
       "Бикрова",
       "Копетдаг",
       "Беркарарлык",
