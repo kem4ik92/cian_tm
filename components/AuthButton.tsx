@@ -11,11 +11,9 @@ export function AuthButton() {
   const [open, setOpen] = useState(false);
   const [tab, setTab] = useState<Tab>("buyer");
   const [mode, setMode] = useState<Mode>("register");
-  const [submitted, setSubmitted] = useState(false);
 
   const close = useCallback(() => {
     setOpen(false);
-    setSubmitted(false);
     setMode("register");
   }, []);
 
@@ -45,15 +43,18 @@ export function AuthButton() {
   if (user) {
     return (
       <div className="flex items-center gap-2">
-        <span className="hidden sm:inline text-sm text-slate-700 dark:text-slate-200 max-w-[8rem] truncate">
+        <span className="hidden md:inline text-sm text-slate-700 dark:text-slate-200 max-w-[8rem] truncate">
           {user.name}
         </span>
         <button
           type="button"
           onClick={logout}
-          className="btn-outline text-sm px-3 py-1.5"
+          className="btn-outline text-xs sm:text-sm px-2 sm:px-3 py-1.5"
+          aria-label={t("nav.logout")}
+          title={t("nav.logout")}
         >
-          {t("nav.logout")}
+          <span className="hidden sm:inline">{t("nav.logout")}</span>
+          <span className="sm:hidden" aria-hidden>⇥</span>
         </button>
       </div>
     );
@@ -77,9 +78,26 @@ export function AuthButton() {
           setOpen(true);
           setMode("register");
         }}
-        className="btn-outline text-sm px-3 py-1.5"
+        className="btn-outline text-sm px-2 sm:px-3 py-1.5 inline-flex items-center gap-1"
+        aria-label={t("nav.register")}
+        title={t("nav.register")}
       >
-        {t("nav.register")}
+        <svg
+          className="sm:hidden"
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden
+        >
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+          <circle cx="12" cy="7" r="4" />
+        </svg>
+        <span className="hidden sm:inline">{t("nav.register")}</span>
       </button>
 
       {open ? (
@@ -103,25 +121,7 @@ export function AuthButton() {
               </button>
             </div>
 
-            {submitted ? (
-              <div className="p-6 text-center">
-                <div className="text-4xl mb-2">👋</div>
-                <p className="text-slate-700 dark:text-slate-200 mb-4">
-                  {tab === "buyer"
-                    ? t("auth.success.buyer")
-                    : t("auth.success.seller")}
-                </p>
-                <button
-                  type="button"
-                  onClick={close}
-                  className="btn-primary"
-                >
-                  {t("auth.close")}
-                </button>
-              </div>
-            ) : (
-              <>
-                <div className="grid grid-cols-2 border-b border-slate-200 dark:border-slate-800">
+            <div className="grid grid-cols-2 border-b border-slate-200 dark:border-slate-800">
                   <button
                     type="button"
                     onClick={() => setTab("buyer")}
@@ -233,8 +233,6 @@ export function AuthButton() {
                     {t("auth.demo_note")}
                   </div>
                 </form>
-              </>
-            )}
           </div>
         </div>
       ) : null}

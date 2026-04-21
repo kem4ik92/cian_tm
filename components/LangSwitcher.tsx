@@ -25,10 +25,11 @@ export function LangSwitcher() {
         type="button"
         onClick={() => setOpen((v) => !v)}
         className="inline-flex items-center gap-1 px-2 py-1.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 text-sm font-medium"
-        aria-label="Language"
+        aria-label={`Language: ${current.label}`}
+        title={current.label}
       >
         <span aria-hidden>{current.flag}</span>
-        <span>{current.label}</span>
+        <span className="hidden sm:inline">{current.label}</span>
         <span className="text-slate-400 dark:text-slate-500 text-xs">▾</span>
       </button>
       {open ? (

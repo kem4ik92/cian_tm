@@ -35,11 +35,11 @@ export function Header() {
 
   return (
     <header className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 sticky top-0 z-30">
-      <div className="max-w-7xl mx-auto px-4 h-16 flex items-center gap-2 md:gap-4">
+      <div className="max-w-7xl mx-auto px-3 md:px-4 h-14 sm:h-16 flex items-center gap-1.5 md:gap-4">
         <button
           type="button"
           onClick={() => setMenuOpen(true)}
-          className="md:hidden inline-flex items-center justify-center h-10 w-10 rounded-lg text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800"
+          className="md:hidden inline-flex items-center justify-center h-9 w-9 rounded-lg text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800 flex-shrink-0"
           aria-label={t("nav.menu")}
         >
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -49,11 +49,11 @@ export function Header() {
           </svg>
         </button>
 
-        <Link href="/" className="flex items-center gap-2 flex-shrink-0">
-          <span className="inline-flex items-center justify-center h-9 w-9 rounded-lg bg-brand-600 text-white font-bold">
+        <Link href="/" className="flex items-center gap-2 flex-shrink-0 min-w-0">
+          <span className="inline-flex items-center justify-center h-8 w-8 sm:h-9 sm:w-9 rounded-lg bg-brand-600 text-white font-bold flex-shrink-0">
             J
           </span>
-          <span className="text-xl font-bold tracking-tight">
+          <span className="text-lg sm:text-xl font-bold tracking-tight">
             Jay<span className="text-brand-600">.tm</span>
           </span>
           <span className="hidden lg:inline text-xs text-slate-500 dark:text-slate-400 ml-1 whitespace-nowrap">
@@ -73,7 +73,7 @@ export function Header() {
           ))}
         </nav>
 
-        <div className="ml-auto flex items-center gap-1.5 sm:gap-2">
+        <div className="ml-auto flex items-center gap-1 sm:gap-2">
           <ThemeSwitcher />
           <LangSwitcher />
           <AuthButton />
@@ -85,8 +85,9 @@ export function Header() {
           </Link>
           <Link
             href="/new"
-            className="btn-primary text-sm md:hidden px-3"
+            className="btn-primary md:hidden inline-flex items-center justify-center h-9 w-9 p-0 text-lg leading-none flex-shrink-0"
             aria-label={t("nav.post")}
+            title={t("nav.post")}
           >
             +
           </Link>

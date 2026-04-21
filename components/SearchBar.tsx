@@ -63,7 +63,7 @@ export function SearchBar({
         </button>
       </div>
 
-      <div className="grid gap-2 md:grid-cols-[1fr_1fr_2fr_auto]">
+      <div className="grid gap-2 grid-cols-2 md:grid-cols-[1fr_1fr_2fr_auto]">
         <select
           className="input"
           value={type}
@@ -90,13 +90,13 @@ export function SearchBar({
           ))}
         </select>
         <input
-          className="input"
+          className="input col-span-2 md:col-span-1"
           placeholder={t("search.placeholder")}
           value={q}
           onChange={(e) => setQ(e.target.value)}
           aria-label={t("search.submit")}
         />
-        <button type="submit" className="btn-primary px-6">
+        <button type="submit" className="btn-primary px-6 col-span-2 md:col-span-1">
           {t("search.submit")}
         </button>
       </div>

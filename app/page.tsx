@@ -47,11 +47,11 @@ export default function Home() {
       <section className="relative isolate overflow-hidden">
         <HeroSlideshow images={heroImages} />
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 py-16 md:py-24">
-          <h1 className="text-white text-3xl md:text-5xl font-bold max-w-3xl drop-shadow">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 py-10 sm:py-16 md:py-24">
+          <h1 className="text-white text-2xl sm:text-3xl md:text-5xl font-bold max-w-3xl drop-shadow">
             {t("hero.title")}
           </h1>
-          <p className="text-white/90 mt-3 max-w-2xl drop-shadow">
+          <p className="text-white/90 mt-3 max-w-2xl drop-shadow text-sm sm:text-base">
             {t("hero.subtitle")}
           </p>
 

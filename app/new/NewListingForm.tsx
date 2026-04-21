@@ -51,7 +51,7 @@ export function NewListingForm() {
   return (
     <form
       onSubmit={onSubmit}
-      className="space-y-5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-6"
+      className="space-y-5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6"
     >
       {error ? (
         <div className="bg-red-50 border border-red-200 text-red-800 text-sm rounded-lg p-3">

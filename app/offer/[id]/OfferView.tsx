@@ -36,11 +36,11 @@ export function OfferView({
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-6">
-      <nav className="text-sm text-slate-500 dark:text-slate-400 mb-3">
+      <nav className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mb-3 flex flex-wrap items-center gap-x-1 gap-y-1">
         <Link href="/" className="hover:text-brand-700">
           {t("offer.home")}
         </Link>
-        <span className="mx-2">/</span>
+        <span aria-hidden>/</span>
         <Link
           href={`/search?deal=${listing.dealType}&type=${listing.propertyType}`}
           className="hover:text-brand-700"
@@ -48,7 +48,7 @@ export function OfferView({
           {listing.dealType === "sale" ? t("deal.sale") : t("deal.rent")} —{" "}
           {t(`prop.${listing.propertyType}` as const)}
         </Link>
-        <span className="mx-2">/</span>
+        <span aria-hidden>/</span>
         <Link
           href={`/search?city=${listing.cityId}`}
           className="hover:text-brand-700"
@@ -57,7 +57,7 @@ export function OfferView({
         </Link>
       </nav>
 
-      <h1 className="text-2xl md:text-3xl font-bold mb-1 text-slate-900 dark:text-slate-100">
+      <h1 className="text-xl sm:text-2xl md:text-3xl font-bold mb-1 text-slate-900 dark:text-slate-100 break-words">
         {listing.title}
       </h1>
       <div className="text-slate-600 dark:text-slate-300 mb-6">
@@ -68,7 +68,7 @@ export function OfferView({
         <div>
           <Gallery images={listing.images} title={listing.title} />
 
-          <section className="mt-8 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6">
+          <section className="mt-8 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-4 sm:p-6">
             <h2 className="text-lg font-semibold mb-4 text-slate-900 dark:text-slate-100">
               {t("offer.characteristics")}
             </h2>
@@ -111,7 +111,7 @@ export function OfferView({
             </dl>
           </section>
 
-          <section className="mt-6 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6">
+          <section className="mt-6 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-4 sm:p-6">
             <h2 className="text-lg font-semibold mb-3 text-slate-900 dark:text-slate-100">
               {t("offer.description")}
             </h2>
@@ -121,7 +121,7 @@ export function OfferView({
           </section>
 
           {listing.amenities.length > 0 ? (
-            <section className="mt-6 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6">
+            <section className="mt-6 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-4 sm:p-6">
               <h2 className="text-lg font-semibold mb-3 text-slate-900 dark:text-slate-100">
                 {t("offer.amenities")}
               </h2>
@@ -135,7 +135,7 @@ export function OfferView({
             </section>
           ) : null}
 
-          <section className="mt-6 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6">
+          <section className="mt-6 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-4 sm:p-6">
             <h2 className="text-lg font-semibold mb-3 text-slate-900 dark:text-slate-100">
               {t("offer.location")}
             </h2>
@@ -155,8 +155,8 @@ export function OfferView({
         </div>
 
         <aside className="lg:sticky lg:top-20 h-fit space-y-4 order-first lg:order-last">
-          <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6">
-            <div className="text-3xl font-bold text-slate-900 dark:text-slate-100">
+          <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-4 sm:p-6">
+            <div className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-slate-100 break-words">
               {priceLabel}
             </div>
             {listing.area ? (
@@ -166,7 +166,7 @@ export function OfferView({
             ) : null}
           </div>
 
-          <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6">
+          <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-4 sm:p-6">
             <div className="text-xs uppercase tracking-wide text-slate-500 dark:text-slate-400">
               {authorRole}
             </div>

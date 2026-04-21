@@ -50,10 +50,10 @@ export function SearchClient() {
       </nav>
 
       <div className="flex items-end justify-between flex-wrap gap-2 mb-4">
-        <h1 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-slate-100">
+        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-slate-900 dark:text-slate-100 break-words max-w-full">
           {title}
         </h1>
-        <div className="text-sm text-slate-700 dark:text-slate-200">
+        <div className="text-xs sm:text-sm text-slate-700 dark:text-slate-200 whitespace-nowrap">
           {t("search.found")}{" "}
           <span className="font-semibold">{results.length}</span>
         </div>
