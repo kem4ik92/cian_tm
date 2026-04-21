@@ -1,36 +1,62 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Jay.tm — прототип сайта недвижимости для Туркменистана
 
-## Getting Started
+Прототип сервиса объявлений о недвижимости для Туркменистана, вдохновлённый [cian.ru](https://www.cian.ru/), но адаптированный под туркменский рынок: города, районы, цены в манатах (TMT), русскоязычный интерфейс.
 
-First, run the development server:
+## Стек
+
+- [Next.js 14](https://nextjs.org/) (App Router) + React 18 + TypeScript
+- [Tailwind CSS](https://tailwindcss.com/)
+- Данные — статические seed-объявления (in-memory в `lib/data.ts`), карта — встроенный OpenStreetMap
+- Изображения — `picsum.photos` (для прототипа)
+
+## Страницы
+
+- `/` — главная: hero с поиском, популярные города, свежие объявления
+- `/search` — каталог с фильтрами (тип сделки, тип недвижимости, город, район, цена, комнаты, площадь) и сортировкой
+- `/offer/[id]` — карточка объявления: галерея, характеристики, описание, удобства, карта, контакты продавца
+- `/new` — форма подачи объявления (демо — данные не сохраняются)
+- `/about` — информация о проекте
+
+## Быстрый старт
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Откройте http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Сборка и проверки
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run lint     # ESLint
+npm run build    # Production сборка
+npm start        # Запуск production-сервера
+```
 
-## Learn More
+## Структура проекта
 
-To learn more about Next.js, take a look at the following resources:
+```
+app/             # Next.js App Router
+├── page.tsx             # Главная
+├── search/              # Каталог
+├── offer/[id]/          # Карточка объявления
+├── new/                 # Подача объявления
+└── about/               # О проекте
+components/      # Переиспользуемые компоненты (Header, Filters, ListingCard, Gallery, ...)
+lib/             # Бизнес-логика
+├── types.ts             # Типы (Listing, DealType, PropertyType, ...)
+├── cities.ts            # Города и районы Туркменистана
+├── data.ts              # Seed-данные
+├── search.ts            # Поиск и фильтрация
+└── format.ts            # Форматирование цен, дат, меток
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Дальнейшие шаги (вне скоупа прототипа)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Реальная БД (Postgres/Prisma) + аутентификация продавцов
+- Загрузка фотографий, модерация объявлений
+- Интеграция с Яндекс.Картами или 2ГИС (туркменская покрываемость)
+- Избранное, сохранённые поиски, email/SMS уведомления
+- Мобильное приложение (React Native / Expo)
+- Туркменская версия интерфейса (tk)
