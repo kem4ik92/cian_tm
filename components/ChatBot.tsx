@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { useApp } from "./I18nProvider";
 import { CITIES } from "@/lib/cities";
 
@@ -18,38 +19,93 @@ const FALLBACK_MODELS = [
 ];
 
 function buildSystemPrompt(lang: "ru" | "tk" | "en"): string {
-  const cityList = CITIES.map((c) => c.name).join(", ");
+  const cityTable = CITIES.map((c) => `${c.id} = ${c.name}`).join("; ");
+  const districtHints = CITIES.map(
+    (c) => `${c.id}: ${c.districts.join(", ")}`,
+  ).join(" | ");
+  const commonRules = [
+    "ВАЖНО: рекомендуй ТОЛЬКО внутренние ссылки этого сайта. Никаких внешних доменов, только относительные пути.",
+    "Разделы сайта: / (главная), /search (каталог), /offer/{id} (карточка), /new (подать объявление), /about.",
+    "Формат ссылки на поиск: /search?deal=<sale|rent>&type=<apartment|house|room|commercial|land>&city=<ID>",
+    `ID городов (используй ИМЕННО их, не русские названия!): ${cityTable}.`,
+    `Районы можно передать параметром &district=<название> дословно: ${districtHints}.`,
+    "Диапазон цен: &price_min=... &price_max=... (в ТМТ). Комнаты: &rooms=1|2|3|4.",
+    "Сортировка: &sort=newest|price_asc|price_desc|area_desc.",
+    "Ссылки оформляй markdown-синтаксисом: [текст](/search?...). Не придумывай несуществующие параметры и значения.",
+    "Если точный объект неизвестен — предлагай /search со связными фильтрами, а не /offer/<id>.",
+  ];
   if (lang === "tk") {
     return [
-      "Sen 'Jay.tm' ady bilen Türkmenistan üçin gozgalmaýan emläk saýtynyň AI kömekçisi.",
-      "Çylşyrymly bolmagyny aýryp, gysga we peýdaly jogaplar ber.",
-      "Goldanylýan şäherler: " + cityList + ".",
-      "Ähli bahalar türkmen manadynda (TMT) görkezilýär.",
-      "Saýtdaky bölümler: /search (katalog, süzgüçler), /offer/[id] (bildiriş), /new (bildiriş goýmak), /about.",
-      "Eger ulanyjy anyk zat gözleýän bolsa, olara /search?deal=…&type=…&city=… görnüşindäki baglanyşygy teklip et.",
-      "Türkmen dilinde jogap ber.",
+      "Sen 'Jay.tm' — Türkmenistan üçin gozgalmaýan emläk saýtynyň AI kömekçisi.",
+      "Gysga we peýdaly jogap ber. Türkmen dilinde jogap ber.",
+      ...commonRules,
     ].join(" ");
   }
   if (lang === "en") {
     return [
-      "You are the AI assistant for 'Jay.tm', a real estate classifieds prototype for Turkmenistan.",
-      "Give short, practical answers.",
-      "Supported cities: " + cityList + ".",
-      "All prices are in Turkmen manat (TMT).",
-      "Site sections: /search (catalog with filters), /offer/[id] (listing), /new (post a listing), /about.",
-      "When users describe what they want, suggest a search link like /search?deal=…&type=…&city=….",
-      "Reply in English.",
+      "You are the AI assistant for 'Jay.tm', a Turkmenistan real estate site.",
+      "Give short, practical answers. Reply in English.",
+      ...commonRules,
     ].join(" ");
   }
   return [
-    "Ты ИИ-помощник сайта «Jay.tm» — прототипа сервиса объявлений о недвижимости в Туркменистане.",
-    "Отвечай кратко и по делу.",
-    "Поддерживаемые города: " + cityList + ".",
-    "Все цены в туркменских манатах (ТМТ).",
-    "Разделы сайта: /search (каталог с фильтрами), /offer/[id] (карточка объявления), /new (подать объявление), /about.",
-    "Если пользователь описывает, что он ищет — предложи ссылку вида /search?deal=…&type=…&city=…",
-    "Отвечай на русском языке.",
+    "Ты ИИ-помощник сайта «Jay.tm» — сервис объявлений о недвижимости в Туркменистане.",
+    "Отвечай кратко и по делу, на русском.",
+    ...commonRules,
   ].join(" ");
+}
+
+// Рендерит текст ответа: кликабельные markdown-ссылки [текст](/path) и голые
+// внутренние пути (/search?.., /offer/.., /new, /about).
+function renderAssistant(text: string): React.ReactNode {
+  const parts: React.ReactNode[] = [];
+  // 1) [label](path) — только внутренние path, начинающиеся с '/'.
+  const mdRe = /\[([^\]]+)\]\((\/[^\s)]*)\)/g;
+  let lastIdx = 0;
+  let match: RegExpExecArray | null;
+  const pushAutolinked = (chunk: string, keyPrefix: string) => {
+    // автолинк для голых путей
+    const urlRe = /(\/(?:search|offer\/[^\s<>"'`]+|new|about)(?:\?[^\s<>"'`]*)?)/g;
+    let li = 0;
+    let m: RegExpExecArray | null;
+    let idx = 0;
+    while ((m = urlRe.exec(chunk)) !== null) {
+      if (m.index > li) parts.push(chunk.slice(li, m.index));
+      const href = m[1].replace(/[.,;:!?)]+$/, "");
+      const trail = m[1].slice(href.length);
+      parts.push(
+        <Link
+          key={`${keyPrefix}-a-${idx++}`}
+          href={href}
+          className="underline text-brand-700 dark:text-brand-400 hover:text-brand-800 dark:hover:text-brand-300 break-all"
+        >
+          {href}
+        </Link>,
+      );
+      if (trail) parts.push(trail);
+      li = m.index + m[1].length;
+    }
+    if (li < chunk.length) parts.push(chunk.slice(li));
+  };
+  let mdIdx = 0;
+  while ((match = mdRe.exec(text)) !== null) {
+    if (match.index > lastIdx)
+      pushAutolinked(text.slice(lastIdx, match.index), `pre-${mdIdx}`);
+    const label = match[1];
+    const href = match[2];
+    parts.push(
+      <Link
+        key={`md-${mdIdx++}`}
+        href={href}
+        className="underline text-brand-700 dark:text-brand-400 hover:text-brand-800 dark:hover:text-brand-300 break-all"
+      >
+        {label}
+      </Link>,
+    );
+    lastIdx = match.index + match[0].length;
+  }
+  if (lastIdx < text.length) pushAutolinked(text.slice(lastIdx), `post-${mdIdx}`);
+  return parts.map((p, i) => <Fragment key={i}>{p}</Fragment>);
 }
 
 export function ChatBot() {
@@ -270,7 +326,7 @@ export function ChatBot() {
                         : "bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 rounded-tl-sm"
                     }`}
                   >
-                    {m.content}
+                    {m.role === "assistant" ? renderAssistant(m.content) : m.content}
                   </div>
                 </div>
               ))}
