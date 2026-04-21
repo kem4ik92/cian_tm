@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { Gallery } from "@/components/Gallery";
 import { ContactReveal } from "@/components/ContactReveal";
 import { ListingCard } from "@/components/ListingCard";
-import { cityName } from "@/lib/cities";
+import { cityById, cityName } from "@/lib/cities";
 import { findListing, LISTINGS } from "@/lib/data";
 import {
   dealLabel,
@@ -20,6 +20,10 @@ export function generateStaticParams() {
 export default function OfferPage({ params }: { params: { id: string } }) {
   const listing = findListing(params.id);
   if (!listing) notFound();
+
+  const city = cityById(listing.cityId);
+  const lat = listing.lat ?? city?.lat ?? 37.95;
+  const lng = listing.lng ?? city?.lng ?? 58.3;
 
   const similar = LISTINGS.filter(
     (l) =>
@@ -121,7 +125,7 @@ export default function OfferPage({ params }: { params: { id: string } }) {
                 className="absolute inset-0 w-full h-full"
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                src={`https://www.openstreetmap.org/export/embed.html?bbox=${(listing.lng ?? 58.3) - 0.02}%2C${(listing.lat ?? 37.95) - 0.02}%2C${(listing.lng ?? 58.3) + 0.02}%2C${(listing.lat ?? 37.95) + 0.02}&layer=mapnik&marker=${listing.lat ?? 37.95}%2C${listing.lng ?? 58.3}`}
+                src={`https://www.openstreetmap.org/export/embed.html?bbox=${lng - 0.02}%2C${lat - 0.02}%2C${lng + 0.02}%2C${lat + 0.02}&layer=mapnik&marker=${lat}%2C${lng}`}
               />
             </div>
             <div className="text-xs text-slate-500 mt-2">
