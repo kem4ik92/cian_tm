@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 :root {
-  --background: #f5f7fa;
-  --foreground: #0f172a;
+  --background: #eef2f6;
+  --foreground: #0b1220;
 }
 
 html,
@@ -20,15 +20,15 @@ body {
 
 @layer components {
   .btn-primary {
-    @apply inline-flex items-center justify-center rounded-lg bg-brand-600 px-4 py-2 text-white font-medium hover:bg-brand-700 transition-colors disabled:opacity-60;
+    @apply inline-flex items-center justify-center rounded-lg bg-brand-600 px-4 py-2 text-white font-medium hover:bg-brand-700 transition-colors disabled:opacity-60 shadow-sm;
   }
   .btn-outline {
     @apply inline-flex items-center justify-center rounded-lg border border-slate-300 bg-white px-4 py-2 text-slate-800 font-medium hover:bg-slate-50 transition-colors;
   }
   .input {
-    @apply w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-200;
+    @apply w-full rounded-lg border border-slate-300 bg-white text-slate-900 placeholder-slate-400 px-3 py-2 text-sm outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-200;
   }
   .chip {
-    @apply inline-flex items-center gap-1 rounded-full bg-brand-50 px-3 py-1 text-xs font-medium text-brand-700;
+    @apply inline-flex items-center gap-1 rounded-full bg-brand-50 px-3 py-1 text-xs font-medium text-brand-800 border border-brand-100;
   }
 }

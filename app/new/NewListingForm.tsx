@@ -2,8 +2,10 @@
 
 import { useMemo, useState } from "react";
 import { CITIES } from "@/lib/cities";
+import { useApp } from "@/components/I18nProvider";
 
 export function NewListingForm() {
+  const { t } = useApp();
   const [cityId, setCityId] = useState<string>("ashgabat");
   const [dealType, setDealType] = useState<string>("sale");
   const [propertyType, setPropertyType] = useState<string>("apartment");
@@ -21,7 +23,7 @@ export function NewListingForm() {
     const area = Number(fd.get("area"));
     const phone = String(fd.get("phone") ?? "").trim();
     if (!title || !price || !area || !phone) {
-      setError("Пожалуйста, заполните обязательные поля: название, цена, площадь и телефон.");
+      setError(t("new.required"));
       return;
     }
     setSubmitted(true);
@@ -31,24 +33,26 @@ export function NewListingForm() {
     return (
       <div className="bg-white border border-slate-200 rounded-xl p-8 text-center">
         <div className="text-4xl mb-3">✨</div>
-        <h2 className="text-xl font-semibold mb-2">Объявление отправлено!</h2>
-        <p className="text-slate-600">
-          В реальном продукте оно бы отправилось на модерацию. Это прототип, поэтому мы
-          просто показываем подтверждение.
-        </p>
+        <h2 className="text-xl font-semibold mb-2 text-slate-900">
+          {t("new.success.title")}
+        </h2>
+        <p className="text-slate-700">{t("new.success.desc")}</p>
         <button
           type="button"
           onClick={() => setSubmitted(false)}
           className="btn-outline mt-4"
         >
-          Подать ещё одно
+          {t("new.success.again")}
         </button>
       </div>
     );
   }
 
   return (
-    <form onSubmit={onSubmit} className="space-y-5 bg-white border border-slate-200 rounded-xl p-6">
+    <form
+      onSubmit={onSubmit}
+      className="space-y-5 bg-white border border-slate-200 rounded-xl p-6"
+    >
       {error ? (
         <div className="bg-red-50 border border-red-200 text-red-800 text-sm rounded-lg p-3">
           {error}
@@ -56,11 +60,11 @@ export function NewListingForm() {
       ) : null}
 
       <div>
-        <label className="block text-sm font-medium mb-1">Тип сделки</label>
+        <label className="block text-sm font-medium mb-1">{t("new.deal")}</label>
         <div className="flex gap-2">
           {[
-            { v: "sale", label: "Продажа" },
-            { v: "rent", label: "Аренда" },
+            { v: "sale", label: t("deal.sale") },
+            { v: "rent", label: t("deal.rent") },
           ].map((o) => (
             <button
               key={o.v}
@@ -69,7 +73,7 @@ export function NewListingForm() {
               className={`px-4 py-2 rounded-lg text-sm ${
                 dealType === o.v
                   ? "bg-brand-600 text-white"
-                  : "bg-slate-100 hover:bg-slate-200"
+                  : "bg-slate-100 hover:bg-slate-200 text-slate-800"
               }`}
             >
               {o.label}
@@ -80,36 +84,38 @@ export function NewListingForm() {
       </div>
 
       <div>
-        <label className="block text-sm font-medium mb-1">Тип недвижимости</label>
+        <label className="block text-sm font-medium mb-1">{t("new.prop")}</label>
         <select
           name="propertyType"
           className="input"
           value={propertyType}
           onChange={(e) => setPropertyType(e.target.value)}
         >
-          <option value="apartment">Квартира</option>
-          <option value="house">Дом</option>
-          <option value="room">Комната</option>
-          <option value="commercial">Коммерческая</option>
-          <option value="land">Участок</option>
+          <option value="apartment">{t("prop.apartment")}</option>
+          <option value="house">{t("prop.house")}</option>
+          <option value="room">{t("prop.room")}</option>
+          <option value="commercial">{t("prop.commercial")}</option>
+          <option value="land">{t("prop.land")}</option>
         </select>
       </div>
 
       <div>
         <label className="block text-sm font-medium mb-1">
-          Заголовок <span className="text-red-600">*</span>
+          {t("new.heading")} <span className="text-red-600">*</span>
         </label>
         <input
           name="title"
           className="input"
-          placeholder="Например: 2-комн квартира в Беркарарлыке"
+          placeholder={t("new.heading.placeholder")}
           required
         />
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium mb-1">Город</label>
+          <label className="block text-sm font-medium mb-1">
+            {t("new.city")}
+          </label>
           <select
             name="cityId"
             className="input"
@@ -124,14 +130,16 @@ export function NewListingForm() {
           </select>
         </div>
         <div>
-          <label className="block text-sm font-medium mb-1">Район</label>
+          <label className="block text-sm font-medium mb-1">
+            {t("new.district")}
+          </label>
           <select
             name="district"
             className="input"
             key={cityId}
             defaultValue=""
           >
-            <option value="">— не выбран —</option>
+            <option value="">{t("new.district.none")}</option>
             {city?.districts.map((d) => (
               <option key={d} value={d}>
                 {d}
@@ -142,14 +150,20 @@ export function NewListingForm() {
       </div>
 
       <div>
-        <label className="block text-sm font-medium mb-1">Адрес</label>
-        <input name="address" className="input" placeholder="Улица, дом" />
+        <label className="block text-sm font-medium mb-1">
+          {t("new.address")}
+        </label>
+        <input
+          name="address"
+          className="input"
+          placeholder={t("new.address.placeholder")}
+        />
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div>
           <label className="block text-sm font-medium mb-1">
-            Цена, ТМТ <span className="text-red-600">*</span>
+            {t("new.price")} <span className="text-red-600">*</span>
           </label>
           <input
             name="price"
@@ -161,7 +175,7 @@ export function NewListingForm() {
         </div>
         <div>
           <label className="block text-sm font-medium mb-1">
-            Площадь, м² <span className="text-red-600">*</span>
+            {t("new.area")} <span className="text-red-600">*</span>
           </label>
           <input
             name="area"
@@ -172,29 +186,35 @@ export function NewListingForm() {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium mb-1">Комнат</label>
+          <label className="block text-sm font-medium mb-1">
+            {t("new.rooms")}
+          </label>
           <input name="rooms" type="number" min={0} className="input" />
         </div>
       </div>
 
       <div>
-        <label className="block text-sm font-medium mb-1">Описание</label>
+        <label className="block text-sm font-medium mb-1">
+          {t("new.description")}
+        </label>
         <textarea
           name="description"
           rows={5}
           className="input"
-          placeholder="Опишите состояние, ремонт, инфраструктуру рядом..."
+          placeholder={t("new.description.placeholder")}
         />
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium mb-1">Ваше имя</label>
+          <label className="block text-sm font-medium mb-1">
+            {t("new.name")}
+          </label>
           <input name="authorName" className="input" />
         </div>
         <div>
           <label className="block text-sm font-medium mb-1">
-            Телефон <span className="text-red-600">*</span>
+            {t("new.phone")} <span className="text-red-600">*</span>
           </label>
           <input
             name="phone"
@@ -205,12 +225,9 @@ export function NewListingForm() {
         </div>
       </div>
 
-      <div className="pt-2 flex items-center justify-between gap-3">
-        <p className="text-xs text-slate-500">
-          Нажимая «Опубликовать», вы подтверждаете правдивость информации.
-        </p>
+      <div className="pt-2 flex items-center justify-end gap-3">
         <button type="submit" className="btn-primary">
-          Опубликовать
+          {t("new.submit")}
         </button>
       </div>
     </form>

@@ -1,19 +1,24 @@
 "use client";
 
 import { useState } from "react";
+import { useApp } from "./I18nProvider";
 
 export function ContactReveal({ phone }: { phone: string }) {
+  const { t } = useApp();
   const [shown, setShown] = useState(false);
   const masked = phone.slice(0, 4) + phone.slice(4).replace(/\d/g, "•");
 
   return (
     <div>
-      <div className="text-lg font-semibold tabular-nums">
+      <div className="text-lg font-semibold tabular-nums text-slate-900">
         {shown ? phone : masked}
       </div>
       {shown ? (
-        <a href={`tel:${phone.replace(/\s/g, "")}`} className="btn-primary w-full mt-2">
-          Позвонить
+        <a
+          href={`tel:${phone.replace(/\s/g, "")}`}
+          className="btn-primary w-full mt-2"
+        >
+          {t("offer.call")}
         </a>
       ) : (
         <button
@@ -21,7 +26,7 @@ export function ContactReveal({ phone }: { phone: string }) {
           onClick={() => setShown(true)}
           className="btn-primary w-full mt-2"
         >
-          Показать телефон
+          {t("offer.show_phone")}
         </button>
       )}
     </div>

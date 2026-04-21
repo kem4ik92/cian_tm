@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { CITIES } from "@/lib/cities";
+import { useApp } from "./I18nProvider";
 
 export function SearchBar({
   initialDeal = "sale",
@@ -16,6 +17,7 @@ export function SearchBar({
   initialQ?: string;
 }) {
   const router = useRouter();
+  const { t } = useApp();
   const [deal, setDeal] = useState(initialDeal);
   const [type, setType] = useState(initialType);
   const [city, setCity] = useState(initialCity);
@@ -34,30 +36,30 @@ export function SearchBar({
   return (
     <form
       onSubmit={submit}
-      className="bg-white rounded-2xl shadow-lg border border-slate-200 p-2 md:p-3"
+      className="bg-white rounded-2xl shadow-xl border border-slate-200 p-2 md:p-3"
     >
       <div className="flex gap-2 mb-2">
         <button
           type="button"
           onClick={() => setDeal("sale")}
-          className={`px-4 py-2 text-sm font-medium rounded-lg ${
+          className={`px-4 py-2 text-sm font-semibold rounded-lg ${
             deal === "sale"
               ? "bg-brand-600 text-white"
               : "bg-slate-100 text-slate-700 hover:bg-slate-200"
           }`}
         >
-          Купить
+          {t("search.buy")}
         </button>
         <button
           type="button"
           onClick={() => setDeal("rent")}
-          className={`px-4 py-2 text-sm font-medium rounded-lg ${
+          className={`px-4 py-2 text-sm font-semibold rounded-lg ${
             deal === "rent"
               ? "bg-brand-600 text-white"
               : "bg-slate-100 text-slate-700 hover:bg-slate-200"
           }`}
         >
-          Снять
+          {t("search.rent")}
         </button>
       </div>
 
@@ -66,21 +68,21 @@ export function SearchBar({
           className="input"
           value={type}
           onChange={(e) => setType(e.target.value)}
-          aria-label="Тип недвижимости"
+          aria-label={t("search.type")}
         >
-          <option value="apartment">Квартира</option>
-          <option value="house">Дом</option>
-          <option value="room">Комната</option>
-          <option value="commercial">Коммерческая</option>
-          <option value="land">Участок</option>
+          <option value="apartment">{t("prop.apartment")}</option>
+          <option value="house">{t("prop.house")}</option>
+          <option value="room">{t("prop.room")}</option>
+          <option value="commercial">{t("prop.commercial")}</option>
+          <option value="land">{t("prop.land")}</option>
         </select>
         <select
           className="input"
           value={city}
           onChange={(e) => setCity(e.target.value)}
-          aria-label="Город"
+          aria-label={t("search.city")}
         >
-          <option value="">Все города</option>
+          <option value="">{t("search.all_cities")}</option>
           {CITIES.map((c) => (
             <option key={c.id} value={c.id}>
               {c.name}
@@ -89,13 +91,13 @@ export function SearchBar({
         </select>
         <input
           className="input"
-          placeholder="Район, улица или ключевое слово"
+          placeholder={t("search.placeholder")}
           value={q}
           onChange={(e) => setQ(e.target.value)}
-          aria-label="Поиск"
+          aria-label={t("search.submit")}
         />
         <button type="submit" className="btn-primary px-6">
-          Найти
+          {t("search.submit")}
         </button>
       </div>
     </form>

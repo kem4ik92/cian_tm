@@ -1,12 +1,10 @@
 import type { Listing } from "./types";
+import { imagesFor } from "./images";
 
 const img = (seed: string, n = 4): string[] =>
-  Array.from(
-    { length: n },
-    (_, i) => `https://picsum.photos/seed/${seed}-${i}/1200/800`,
-  );
+  Array.from({ length: n }, () => seed);
 
-export const LISTINGS: Listing[] = [
+const RAW_LISTINGS: Listing[] = [
   {
     id: "ash-001",
     title: "2-комн квартира в новостройке, Беркарарлык",
@@ -616,6 +614,11 @@ export const LISTINGS: Listing[] = [
     publishedAt: "2026-04-14T17:00:00Z",
   },
 ];
+
+export const LISTINGS: Listing[] = RAW_LISTINGS.map((l) => ({
+  ...l,
+  images: imagesFor(l.propertyType, l.id, Math.max(3, l.images.length || 4)),
+}));
 
 export function findListing(id: string): Listing | undefined {
   return LISTINGS.find((l) => l.id === id);

@@ -1,11 +1,18 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import { SearchBar } from "@/components/SearchBar";
 import { ListingCard } from "@/components/ListingCard";
 import { CITIES } from "@/lib/cities";
 import { LISTINGS } from "@/lib/data";
+import { HERO_IMAGE, CITY_IMAGES } from "@/lib/images";
+import { useApp } from "@/components/I18nProvider";
+import { pluralListings } from "@/lib/i18n";
 
 export default function Home() {
+  const { t, lang } = useApp();
+
   const newest = [...LISTINGS]
     .sort(
       (a, b) =>
@@ -24,23 +31,21 @@ export default function Home() {
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 -z-10">
           <Image
-            src="https://picsum.photos/seed/ashgabat-hero/1920/900"
+            src={HERO_IMAGE}
             alt=""
             fill
             priority
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-brand-900/80 via-brand-800/60 to-brand-700/70" />
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-950/85 via-slate-900/75 to-brand-900/85" />
         </div>
 
         <div className="max-w-7xl mx-auto px-4 py-16 md:py-24">
-          <h1 className="text-white text-3xl md:text-5xl font-bold max-w-3xl">
-            Вся недвижимость Туркменистана на одном сайте
+          <h1 className="text-white text-3xl md:text-5xl font-bold max-w-3xl drop-shadow">
+            {t("hero.title")}
           </h1>
-          <p className="text-white/90 mt-3 max-w-2xl">
-            Продажа и аренда квартир, домов, коммерческой недвижимости и
-            участков в Ашхабаде, Туркменабате, Мары, Дашогузе, Балканабате и
-            Туркменбаши.
+          <p className="text-white/90 mt-3 max-w-2xl drop-shadow">
+            {t("hero.subtitle")}
           </p>
 
           <div className="mt-8 max-w-4xl">
@@ -50,33 +55,33 @@ export default function Home() {
           <div className="mt-6 flex flex-wrap gap-2">
             <Link
               href="/search?deal=sale&type=apartment&city=ashgabat"
-              className="chip bg-white/90 text-brand-800 hover:bg-white"
+              className="inline-flex items-center rounded-full bg-white/95 hover:bg-white px-3 py-1 text-xs font-medium text-brand-800"
             >
-              Квартиры в Ашхабаде
+              {t("hero.chip.apt_ashgabat")}
             </Link>
             <Link
               href="/search?deal=rent&type=apartment"
-              className="chip bg-white/90 text-brand-800 hover:bg-white"
+              className="inline-flex items-center rounded-full bg-white/95 hover:bg-white px-3 py-1 text-xs font-medium text-brand-800"
             >
-              Аренда квартир
+              {t("hero.chip.rent_apt")}
             </Link>
             <Link
               href="/search?type=house"
-              className="chip bg-white/90 text-brand-800 hover:bg-white"
+              className="inline-flex items-center rounded-full bg-white/95 hover:bg-white px-3 py-1 text-xs font-medium text-brand-800"
             >
-              Частные дома
+              {t("hero.chip.private_houses")}
             </Link>
             <Link
               href="/search?deal=rent&type=commercial"
-              className="chip bg-white/90 text-brand-800 hover:bg-white"
+              className="inline-flex items-center rounded-full bg-white/95 hover:bg-white px-3 py-1 text-xs font-medium text-brand-800"
             >
-              Офисы и магазины
+              {t("hero.chip.offices")}
             </Link>
             <Link
               href="/search?city=turkmenbashi"
-              className="chip bg-white/90 text-brand-800 hover:bg-white"
+              className="inline-flex items-center rounded-full bg-white/95 hover:bg-white px-3 py-1 text-xs font-medium text-brand-800"
             >
-              Туркменбаши и Аваза
+              {t("hero.chip.avaza")}
             </Link>
           </div>
         </div>
@@ -85,12 +90,14 @@ export default function Home() {
       {/* Cities */}
       <section className="max-w-7xl mx-auto px-4 py-12">
         <div className="flex items-end justify-between mb-6">
-          <h2 className="text-2xl font-bold">Популярные города</h2>
+          <h2 className="text-2xl font-bold text-slate-900">
+            {t("home.popular_cities")}
+          </h2>
           <Link
             href="/search"
             className="text-sm text-brand-700 hover:underline"
           >
-            Все объявления →
+            {t("home.all_listings")}
           </Link>
         </div>
         <div className="grid gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
@@ -98,26 +105,20 @@ export default function Home() {
             <Link
               key={city.id}
               href={`/search?city=${city.id}`}
-              className="relative aspect-[4/3] rounded-xl overflow-hidden group"
+              className="relative aspect-[4/3] rounded-xl overflow-hidden group border border-slate-200"
             >
               <Image
-                src={`https://picsum.photos/seed/${city.id}-tile/800/600`}
+                src={CITY_IMAGES[city.id] ?? HERO_IMAGE}
                 alt={city.name}
                 fill
                 sizes="(max-width: 768px) 50vw, 25vw"
                 className="object-cover group-hover:scale-105 transition-transform duration-300"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
               <div className="absolute bottom-3 left-3 right-3 text-white">
                 <div className="text-lg font-semibold">{city.name}</div>
                 <div className="text-xs opacity-90">
-                  {count} объявлен
-                  {count % 10 === 1 && count % 100 !== 11
-                    ? "ие"
-                    : [2, 3, 4].includes(count % 10) &&
-                        ![12, 13, 14].includes(count % 100)
-                      ? "ия"
-                      : "ий"}
+                  {count} {pluralListings(lang, count)}
                 </div>
               </div>
             </Link>
@@ -128,12 +129,14 @@ export default function Home() {
       {/* Newest listings */}
       <section className="max-w-7xl mx-auto px-4 py-12">
         <div className="flex items-end justify-between mb-6">
-          <h2 className="text-2xl font-bold">Свежие объявления</h2>
+          <h2 className="text-2xl font-bold text-slate-900">
+            {t("home.newest")}
+          </h2>
           <Link
             href="/search"
             className="text-sm text-brand-700 hover:underline"
           >
-            Смотреть все →
+            {t("home.see_all")}
           </Link>
         </div>
         <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
@@ -150,29 +153,28 @@ export default function Home() {
             <div className="h-10 w-10 rounded-lg bg-brand-100 text-brand-700 flex items-center justify-center font-bold mb-3">
               ⌕
             </div>
-            <h3 className="font-semibold mb-1">Удобный поиск</h3>
-            <p className="text-sm text-slate-600">
-              Фильтры по городу, району, цене, площади и количеству комнат.
-            </p>
+            <h3 className="font-semibold mb-1 text-slate-900">
+              {t("home.feature1.title")}
+            </h3>
+            <p className="text-sm text-slate-600">{t("home.feature1.desc")}</p>
           </div>
           <div className="bg-white rounded-xl border border-slate-200 p-6">
             <div className="h-10 w-10 rounded-lg bg-brand-100 text-brand-700 flex items-center justify-center font-bold mb-3">
               ₮
             </div>
-            <h3 className="font-semibold mb-1">Цены в манатах</h3>
-            <p className="text-sm text-slate-600">
-              Все цены указаны в туркменских манатах (TMT) — без конвертаций.
-            </p>
+            <h3 className="font-semibold mb-1 text-slate-900">
+              {t("home.feature2.title")}
+            </h3>
+            <p className="text-sm text-slate-600">{t("home.feature2.desc")}</p>
           </div>
           <div className="bg-white rounded-xl border border-slate-200 p-6">
             <div className="h-10 w-10 rounded-lg bg-brand-100 text-brand-700 flex items-center justify-center font-bold mb-3">
               ＋
             </div>
-            <h3 className="font-semibold mb-1">Бесплатная публикация</h3>
-            <p className="text-sm text-slate-600">
-              Подайте объявление за минуту и получайте заявки от реальных
-              покупателей и арендаторов.
-            </p>
+            <h3 className="font-semibold mb-1 text-slate-900">
+              {t("home.feature3.title")}
+            </h3>
+            <p className="text-sm text-slate-600">{t("home.feature3.desc")}</p>
           </div>
         </div>
       </section>

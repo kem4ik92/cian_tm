@@ -1,15 +1,19 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { cityName } from "@/lib/cities";
-import {
-  formatPriceCompact,
-  propertyLabel,
-  relativeDate,
-  roomsLabel,
-} from "@/lib/format";
+import { formatPrice } from "@/lib/format";
 import type { Listing } from "@/lib/types";
+import { useApp } from "./I18nProvider";
+import { relativeDateI18n } from "@/lib/dateI18n";
 
 export function ListingCard({ listing }: { listing: Listing }) {
+  const { t, lang } = useApp();
+  const price = formatPrice(listing.price);
+  const priceLabel =
+    listing.dealType === "rent" ? `${price} ${t("listing.per_month")}` : price;
+
   return (
     <Link
       href={`/offer/${listing.id}`}
@@ -25,32 +29,38 @@ export function ListingCard({ listing }: { listing: Listing }) {
         />
         <div className="absolute top-2 left-2 flex gap-2">
           <span
-            className={`text-xs font-semibold px-2 py-1 rounded-full text-white ${
+            className={`text-xs font-semibold px-2 py-1 rounded-full text-white shadow ${
               listing.dealType === "sale" ? "bg-brand-600" : "bg-blue-600"
             }`}
           >
-            {listing.dealType === "sale" ? "Продажа" : "Аренда"}
+            {listing.dealType === "sale"
+              ? t("listing.sale")
+              : t("listing.rent")}
           </span>
-          <span className="text-xs font-medium px-2 py-1 rounded-full bg-white/90 text-slate-800 backdrop-blur">
-            {propertyLabel(listing.propertyType)}
+          <span className="text-xs font-medium px-2 py-1 rounded-full bg-white text-slate-800 shadow">
+            {t(`prop.${listing.propertyType}` as const)}
           </span>
         </div>
       </div>
 
       <div className="p-4">
-        <div className="text-lg font-bold text-slate-900">
-          {formatPriceCompact(listing.price, listing.dealType)}
-        </div>
+        <div className="text-lg font-bold text-slate-900">{priceLabel}</div>
         <div className="mt-1 text-sm text-slate-700 line-clamp-1">
           {listing.title}
         </div>
         <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-xs text-slate-600">
-          {listing.rooms ? <span>{roomsLabel(listing.rooms)}</span> : null}
+          {listing.rooms ? (
+            <span>
+              {listing.rooms}
+              {t("listing.rooms_suffix")}
+            </span>
+          ) : null}
           <span>{listing.area} м²</span>
           {listing.floor ? (
             <span>
               {listing.floor}
-              {listing.totalFloors ? `/${listing.totalFloors}` : ""} эт.
+              {listing.totalFloors ? `/${listing.totalFloors}` : ""}{" "}
+              {t("listing.floor_suffix")}
             </span>
           ) : null}
         </div>
@@ -58,7 +68,7 @@ export function ListingCard({ listing }: { listing: Listing }) {
           {cityName(listing.cityId)}, {listing.district}
         </div>
         <div className="mt-2 text-xs text-slate-400">
-          {relativeDate(listing.publishedAt)}
+          {relativeDateI18n(listing.publishedAt, lang)}
         </div>
       </div>
     </Link>

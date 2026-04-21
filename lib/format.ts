@@ -46,7 +46,6 @@ export function propertyLabelPlural(p: string): string {
 
 export function roomsLabel(rooms?: number): string {
   if (!rooms) return "";
-  if (rooms >= 5) return `${rooms}+ комн.`;
   return `${rooms}-комн.`;
 }
 

@@ -3,10 +3,12 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useMemo } from "react";
 import { CITIES } from "@/lib/cities";
+import { useApp } from "./I18nProvider";
 
 export function Filters() {
   const router = useRouter();
   const sp = useSearchParams();
+  const { t } = useApp();
 
   const current = useMemo(() => {
     const get = (k: string) => sp.get(k) ?? "";
@@ -37,19 +39,17 @@ export function Filters() {
     router.push(`/search?${params.toString()}`);
   };
 
-  const reset = () => {
-    router.push("/search");
-  };
+  const reset = () => router.push("/search");
 
   return (
     <aside className="bg-white rounded-xl border border-slate-200 p-4 space-y-5 sticky top-20">
       <div>
-        <h3 className="text-sm font-semibold mb-2">Тип сделки</h3>
+        <h3 className="text-sm font-semibold mb-2">{t("filters.deal")}</h3>
         <div className="grid grid-cols-3 gap-1">
           {[
-            { v: "", label: "Все" },
-            { v: "sale", label: "Купить" },
-            { v: "rent", label: "Снять" },
+            { v: "", label: t("filters.deal.all") },
+            { v: "sale", label: t("nav.buy") },
+            { v: "rent", label: t("nav.rent") },
           ].map((o) => (
             <button
               key={o.v}
@@ -58,7 +58,7 @@ export function Filters() {
               className={`px-2 py-1.5 text-xs rounded ${
                 current.deal === o.v
                   ? "bg-brand-600 text-white"
-                  : "bg-slate-100 hover:bg-slate-200"
+                  : "bg-slate-100 hover:bg-slate-200 text-slate-800"
               }`}
             >
               {o.label}
@@ -68,29 +68,29 @@ export function Filters() {
       </div>
 
       <div>
-        <h3 className="text-sm font-semibold mb-2">Тип недвижимости</h3>
+        <h3 className="text-sm font-semibold mb-2">{t("filters.prop")}</h3>
         <select
           className="input"
           value={current.type}
           onChange={(e) => update({ type: e.target.value })}
         >
-          <option value="">Любой</option>
-          <option value="apartment">Квартира</option>
-          <option value="house">Дом</option>
-          <option value="room">Комната</option>
-          <option value="commercial">Коммерческая</option>
-          <option value="land">Участок</option>
+          <option value="">{t("filters.prop.any")}</option>
+          <option value="apartment">{t("prop.apartment")}</option>
+          <option value="house">{t("prop.house")}</option>
+          <option value="room">{t("prop.room")}</option>
+          <option value="commercial">{t("prop.commercial")}</option>
+          <option value="land">{t("prop.land")}</option>
         </select>
       </div>
 
       <div>
-        <h3 className="text-sm font-semibold mb-2">Город</h3>
+        <h3 className="text-sm font-semibold mb-2">{t("filters.city")}</h3>
         <select
           className="input"
           value={current.city}
           onChange={(e) => update({ city: e.target.value, district: "" })}
         >
-          <option value="">Все города</option>
+          <option value="">{t("search.all_cities")}</option>
           {CITIES.map((c) => (
             <option key={c.id} value={c.id}>
               {c.name}
@@ -103,7 +103,7 @@ export function Filters() {
             value={current.district}
             onChange={(e) => update({ district: e.target.value })}
           >
-            <option value="">Любой район</option>
+            <option value="">{t("filters.district.any")}</option>
             {city.districts.map((d) => (
               <option key={d} value={d}>
                 {d}
@@ -114,12 +114,12 @@ export function Filters() {
       </div>
 
       <div>
-        <h3 className="text-sm font-semibold mb-2">Цена, ТМТ</h3>
+        <h3 className="text-sm font-semibold mb-2">{t("filters.price")}</h3>
         <div className="grid grid-cols-2 gap-2">
           <input
             key={`minPrice-${current.minPrice}`}
             className="input"
-            placeholder="от"
+            placeholder={t("filters.price.from")}
             inputMode="numeric"
             defaultValue={current.minPrice}
             onBlur={(e) => update({ minPrice: e.target.value })}
@@ -127,7 +127,7 @@ export function Filters() {
           <input
             key={`maxPrice-${current.maxPrice}`}
             className="input"
-            placeholder="до"
+            placeholder={t("filters.price.to")}
             inputMode="numeric"
             defaultValue={current.maxPrice}
             onBlur={(e) => update({ maxPrice: e.target.value })}
@@ -136,7 +136,7 @@ export function Filters() {
       </div>
 
       <div>
-        <h3 className="text-sm font-semibold mb-2">Комнат</h3>
+        <h3 className="text-sm font-semibold mb-2">{t("filters.rooms")}</h3>
         <div className="flex flex-wrap gap-1">
           {["", "1", "2", "3", "4", "5"].map((v) => (
             <button
@@ -148,22 +148,22 @@ export function Filters() {
               className={`px-3 py-1.5 text-xs rounded border ${
                 current.minRooms === v
                   ? "bg-brand-600 text-white border-brand-600"
-                  : "bg-white border-slate-300 hover:bg-slate-50"
+                  : "bg-white border-slate-300 hover:bg-slate-50 text-slate-800"
               }`}
             >
-              {v === "" ? "Любое" : v === "5" ? "5+" : v}
+              {v === "" ? t("filters.rooms.any") : v === "5" ? "5+" : v}
             </button>
           ))}
         </div>
       </div>
 
       <div>
-        <h3 className="text-sm font-semibold mb-2">Площадь, м²</h3>
+        <h3 className="text-sm font-semibold mb-2">{t("filters.area")}</h3>
         <div className="grid grid-cols-2 gap-2">
           <input
             key={`minArea-${current.minArea}`}
             className="input"
-            placeholder="от"
+            placeholder={t("filters.price.from")}
             inputMode="numeric"
             defaultValue={current.minArea}
             onBlur={(e) => update({ minArea: e.target.value })}
@@ -171,7 +171,7 @@ export function Filters() {
           <input
             key={`maxArea-${current.maxArea}`}
             className="input"
-            placeholder="до"
+            placeholder={t("filters.price.to")}
             inputMode="numeric"
             defaultValue={current.maxArea}
             onBlur={(e) => update({ maxArea: e.target.value })}
@@ -179,12 +179,8 @@ export function Filters() {
         </div>
       </div>
 
-      <button
-        type="button"
-        onClick={reset}
-        className="w-full btn-outline text-sm"
-      >
-        Сбросить фильтры
+      <button type="button" onClick={reset} className="btn-outline w-full">
+        {t("filters.reset")}
       </button>
     </aside>
   );

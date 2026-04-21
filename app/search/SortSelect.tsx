@@ -1,17 +1,19 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-
-const OPTIONS: { v: string; label: string }[] = [
-  { v: "newest", label: "Сначала новые" },
-  { v: "price_asc", label: "Цена ↑" },
-  { v: "price_desc", label: "Цена ↓" },
-  { v: "area_desc", label: "Площадь ↓" },
-];
+import { useApp } from "@/components/I18nProvider";
 
 export function SortSelect({ current }: { current: string }) {
   const router = useRouter();
   const sp = useSearchParams();
+  const { t } = useApp();
+
+  const options: { v: string; label: string }[] = [
+    { v: "newest", label: t("search.sort.newest") },
+    { v: "price_asc", label: t("search.sort.price_asc") },
+    { v: "price_desc", label: t("search.sort.price_desc") },
+    { v: "area_desc", label: t("search.sort.area_desc") },
+  ];
 
   const onChange = (v: string) => {
     const params = new URLSearchParams(sp.toString());
@@ -21,14 +23,14 @@ export function SortSelect({ current }: { current: string }) {
   };
 
   return (
-    <label className="text-sm text-slate-600 flex items-center gap-2">
-      Сортировка:
+    <label className="text-sm text-slate-700 flex items-center gap-2">
+      {t("search.sort")}
       <select
         className="input py-1.5 w-auto"
         value={current}
         onChange={(e) => onChange(e.target.value)}
       >
-        {OPTIONS.map((o) => (
+        {options.map((o) => (
           <option key={o.v} value={o.v}>
             {o.label}
           </option>

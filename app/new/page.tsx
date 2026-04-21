@@ -1,13 +1,16 @@
+"use client";
+
 import { NewListingForm } from "./NewListingForm";
+import { useApp } from "@/components/I18nProvider";
 
 export default function NewListingPage() {
+  const { t } = useApp();
   return (
     <div className="max-w-3xl mx-auto px-4 py-8">
-      <h1 className="text-2xl md:text-3xl font-bold">Подать объявление</h1>
-      <p className="text-slate-600 mt-1 mb-6">
-        Заполните форму — объявление появится на сайте после модерации. Это
-        прототип, данные сохраняются только в рамках текущей сессии браузера.
-      </p>
+      <h1 className="text-2xl md:text-3xl font-bold text-slate-900">
+        {t("new.title")}
+      </h1>
+      <p className="text-slate-700 mt-1 mb-6">{t("new.subtitle")}</p>
       <NewListingForm />
     </div>
   );

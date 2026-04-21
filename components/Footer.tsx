@@ -1,6 +1,10 @@
+"use client";
+
 import Link from "next/link";
+import { useApp } from "./I18nProvider";
 
 export function Footer() {
+  const { t } = useApp();
   return (
     <footer className="bg-slate-900 text-slate-300 mt-16">
       <div className="max-w-7xl mx-auto px-4 py-10 grid gap-8 md:grid-cols-4">
@@ -13,56 +17,66 @@ export function Footer() {
               Jay<span className="text-brand-400">.tm</span>
             </span>
           </div>
-          <p className="text-sm">
-            Сервис объявлений о недвижимости в Туркменистане: продажа, аренда,
-            коммерческая недвижимость в Ашхабаде, Туркменабате, Мары, Дашогузе,
-            Балканабате и Туркменбаши.
-          </p>
+          <p className="text-sm">{t("footer.desc")}</p>
         </div>
         <div>
-          <h3 className="text-white font-semibold mb-3">Купить</h3>
+          <h3 className="text-white font-semibold mb-3">{t("footer.buy")}</h3>
           <ul className="space-y-2 text-sm">
             <li>
-              <Link href="/search?deal=sale&type=apartment">Квартиры</Link>
+              <Link href="/search?deal=sale&type=apartment">
+                {t("footer.apartments")}
+              </Link>
             </li>
             <li>
-              <Link href="/search?deal=sale&type=house">Дома</Link>
+              <Link href="/search?deal=sale&type=house">
+                {t("footer.houses")}
+              </Link>
             </li>
             <li>
-              <Link href="/search?deal=sale&type=land">Участки</Link>
+              <Link href="/search?deal=sale&type=land">{t("footer.land")}</Link>
             </li>
             <li>
               <Link href="/search?deal=sale&type=commercial">
-                Коммерческая
+                {t("footer.commercial")}
               </Link>
             </li>
           </ul>
         </div>
         <div>
-          <h3 className="text-white font-semibold mb-3">Снять</h3>
+          <h3 className="text-white font-semibold mb-3">{t("footer.rent")}</h3>
           <ul className="space-y-2 text-sm">
             <li>
-              <Link href="/search?deal=rent&type=apartment">Квартиры</Link>
+              <Link href="/search?deal=rent&type=apartment">
+                {t("footer.apartments")}
+              </Link>
             </li>
             <li>
-              <Link href="/search?deal=rent&type=house">Дома</Link>
+              <Link href="/search?deal=rent&type=house">
+                {t("footer.houses")}
+              </Link>
             </li>
             <li>
-              <Link href="/search?deal=rent&type=room">Комнаты</Link>
+              <Link href="/search?deal=rent&type=room">
+                {t("footer.rooms")}
+              </Link>
             </li>
             <li>
-              <Link href="/search?deal=rent&type=commercial">Офисы</Link>
+              <Link href="/search?deal=rent&type=commercial">
+                {t("footer.offices")}
+              </Link>
             </li>
           </ul>
         </div>
         <div>
-          <h3 className="text-white font-semibold mb-3">Сервис</h3>
+          <h3 className="text-white font-semibold mb-3">
+            {t("footer.service")}
+          </h3>
           <ul className="space-y-2 text-sm">
             <li>
-              <Link href="/new">Подать объявление</Link>
+              <Link href="/new">{t("footer.post")}</Link>
             </li>
             <li>
-              <Link href="/about">О проекте</Link>
+              <Link href="/about">{t("footer.about")}</Link>
             </li>
             <li>
               <a href="mailto:info@jay.tm">info@jay.tm</a>
@@ -71,7 +85,7 @@ export function Footer() {
         </div>
       </div>
       <div className="border-t border-slate-800 text-xs text-slate-500 py-4 text-center">
-        © {new Date().getFullYear()} Jay.tm — прототип. Все права не защищены.
+        © {new Date().getFullYear()} Jay.tm — {t("footer.rights")}
       </div>
     </footer>
   );

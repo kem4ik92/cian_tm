@@ -7,11 +7,12 @@ import { Filters } from "@/components/Filters";
 import { ListingCard } from "@/components/ListingCard";
 import { cityName } from "@/lib/cities";
 import { parseSearchParams, searchListings } from "@/lib/search";
-import { propertyLabelPlural, dealLabel } from "@/lib/format";
 import { SortSelect } from "./SortSelect";
+import { useApp } from "@/components/I18nProvider";
 
 export function SearchClient() {
   const sp = useSearchParams();
+  const { t } = useApp();
 
   const { params, results, title } = useMemo(() => {
     const record: Record<string, string> = {};
@@ -20,30 +21,37 @@ export function SearchClient() {
     });
     const params = parseSearchParams(record);
     const results = searchListings(params);
-    const title = [
-      params.deal ? dealLabel(params.deal) : "Недвижимость",
-      params.type ? propertyLabelPlural(params.type).toLowerCase() : null,
-      params.cityId ? `в ${cityName(params.cityId)}` : "в Туркменистане",
-    ]
-      .filter(Boolean)
-      .join(" ");
+    const dealPart = params.deal
+      ? params.deal === "sale"
+        ? t("deal.sale")
+        : t("deal.rent")
+      : t("prop.apartment.pl");
+    const typePart = params.type
+      ? t(`prop.${params.type}.pl` as const).toLowerCase()
+      : "";
+    const cityPart = params.cityId ? `— ${cityName(params.cityId)}` : "";
+    const title = [dealPart, typePart, cityPart].filter(Boolean).join(" ");
     return { params, results, title };
-  }, [sp]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sp, t]);
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-6">
       <nav className="text-sm text-slate-500 mb-3">
         <Link href="/" className="hover:text-brand-700">
-          Главная
+          {t("offer.home")}
         </Link>
         <span className="mx-2">/</span>
-        <span>Поиск</span>
+        <span>{t("search.submit")}</span>
       </nav>
 
       <div className="flex items-end justify-between flex-wrap gap-2 mb-4">
-        <h1 className="text-2xl md:text-3xl font-bold">{title}</h1>
-        <div className="text-sm text-slate-600">
-          Найдено: <span className="font-semibold">{results.length}</span>
+        <h1 className="text-2xl md:text-3xl font-bold text-slate-900">
+          {title}
+        </h1>
+        <div className="text-sm text-slate-700">
+          {t("search.found")}{" "}
+          <span className="font-semibold">{results.length}</span>
         </div>
       </div>
 
@@ -58,11 +66,9 @@ export function SearchClient() {
           {results.length === 0 ? (
             <div className="bg-white border border-dashed border-slate-300 rounded-xl p-10 text-center">
               <div className="text-4xl mb-3">🔎</div>
-              <p className="text-slate-700 mb-4">
-                По выбранным фильтрам ничего не найдено.
-              </p>
+              <p className="text-slate-700 mb-4">{t("search.no_results")}</p>
               <Link href="/search" className="btn-outline">
-                Сбросить фильтры
+                {t("search.reset")}
               </Link>
             </div>
           ) : (
